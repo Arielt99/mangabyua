@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-2 px-4 py-4 flex justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg">
+    <inertia-link :href="route('admin.user.show', {id: user.id})" class="mt-2 px-4 py-4 flex justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg">
         <!-- Card -->
         <div class="w-20 flex flex-col capitalize text-gray-600 dark:text-gray-400">
             <span>id</span>
@@ -45,7 +45,7 @@
                 {{configDateTime(user.created_at)}}
             </span>
         </div>
-    </div>
+    </inertia-link>
 </template>
 <script>
     import moment from 'moment'
@@ -54,10 +54,10 @@
         props: ['user'],
 
         methods:{
-        //date configuration with moment.js
-        configDateTime(date) {
-            return moment(date).locale("fr").format("Do MMM YYYY");
+            //date configuration with moment.js
+            configDateTime(date) {
+                return moment(date).locale("en").format("MMM Do YYYY");
+            },
         },
-    },
     }
 </script>

@@ -28,7 +28,7 @@ class UserController extends Controller
                         ->orderBy('id', 'desc')
                         ->get();
 
-        return Inertia::render('Admin/UsersList', [
+        return Inertia::render('Admin/User/Index', [
             'users' => $users
         ]);
     }
@@ -62,7 +62,15 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::query()
+                        ->with('roles')
+                        ->find($id);
+        if(!$user){
+            return back();
+        }
+        return Inertia::render('Admin/User/Show', [
+            'user' => $user
+        ]);
     }
 
     /**

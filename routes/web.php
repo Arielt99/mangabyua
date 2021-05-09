@@ -38,5 +38,7 @@ Route::group([
     ],
 ], function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-    Route::get('/user', [UserController::class, 'index'])->name('users.index');
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+
 });
