@@ -6,205 +6,72 @@
                 duration-500 ease-in-out overflow-y-auto">
                 <div class="mx-10 my-2">
                     <h2 class="my-4 text-4xl font-semibold dark:text-gray-400">
-                        User list
+                            <span v-if="route().params['roles'] == 'Mangaka'">Mangakas</span>
+                            <span v-else-if="route().params['roles'] == 'Reader'">Readers</span>
+                            <span v-else>Users</span>
+                            <span> List</span>
                     </h2>
                     <div
                         class="pb-2 flex items-center justify-between text-gray-600
                         dark:text-gray-400 border-b dark:border-gray-600">
                         <!-- Header -->
-
                         <div>
-                            <span>
-                                <span class="text-green-500 dark:text-green-200">
+                            <span v-if="route().params['roles'] != 'Mangaka'  && route().params['roles'] != 'Reader'">
+                                <span class="text-red-500 dark:text-red-200">
                                     {{this.users.length}}
                                 </span>
-                                Total Users;
+                                Total Users
                             </span>
-                            <span>
-                                <span class="text-green-500 dark:text-green-200">
+                            <span v-if="route().params['roles'] != 'Reader'" class="pl-5">
+                                <span class="text-red-500 dark:text-red-200">
                                     {{this.users.filter(user => user.roles.find(role => role.name == "Mangaka")).length}}
                                 </span>
-                                Mangakas;
+                                Mangakas
                             </span>
-                            <span>
-                                <span class="text-green-500 dark:text-green-200">
+                            <span v-if="route().params['roles'] != 'Mangaka'" class="pl-5">
+                                <span class="text-red-500 dark:text-red-200">
                                     {{this.users.filter(user => user.roles.find(role => role.name == "Reader")).length}}
                                 </span>
                                 Readers
                             </span>
                         </div>
-                        <div>
-                            <span class="capitalize ml-12">
-                                role
-                                <span
-                                    class="text-green-500 dark:text-green-200
-                                    cursor-pointer">
-                                    all
-                                </span>
-                            </span>
-                        </div>
-
                     </div>
-                    <div
-                        class="mt-6 flex justify-between text-gray-600 dark:text-gray-400">
+                    <div class="mt-2 flex px-4 justify-between text-gray-600 dark:text-gray-400 capitalize">
                         <!-- List sorting -->
+                        <div @click="this.sort == 'asc.id' ? Sort('desc.id') : Sort('asc.id')" class="w-20 flex items-center">
+                            <span>id</span>
+                            <svg v-if="this.sort == 'asc.id'" class="ml-1 h-5 w-5 fill-current text-red-500 dark:text-red-200" viewBox="0 0 24 24">
+                                <path d="M18 21l-4-4h3V7l2 0v10h3M 2 19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
+                            </svg>
+                            <svg v-else-if="this.sort == 'desc.id'" class="ml-1 h-5 w-5 fill-current text-red-500 dark:text-red-200" viewBox="0 0 24 24">
+                                <path d="M17 17V7h-3l4-4l4 4h-3v10h3M2 19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
 
-                        <div class="ml-10 pl-2 flex capitalize">
-                            <!-- Left side -->
-                            <span class="ml-8 flex items-center">
-                                name
-                                <svg
-                                    class="ml-1 h-5 w-5 fill-current text-green-500
-                                    dark:text-green-200"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M18 21l-4-4h3V7h-3l4-4 4 4h-3v10h3M2
-                                        19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
-                                </svg>
-                            </span>
-                            <span class="ml-24 flex items-center">
-                                login
-                                <svg
-                                    class="ml-1 h-5 w-5 fill-current"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M18 21l-4-4h3V7h-3l4-4 4 4h-3v10h3M2
-                                        19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
-                                </svg>
-                            </span>
+                            </svg>
+                            <svg v-else class="ml-1 h-5 w-5 fill-current" viewBox="0 0 24 24">
+                                <path d="M18 21l-4-4h3V7h-3l4-4 4 4h-3v10h3M2 19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
+                            </svg>
                         </div>
-
-                        <div class="mr-12 flex capitalize">
-                            <!-- Right side -->
-
-                            <span class="mr-16 pr-1 flex items-center">
-                                Email
-                                <svg
-                                    class="ml-1 h-5 w-5 fill-current"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M18 21l-4-4h3V7h-3l4-4 4 4h-3v10h3M2
-                                        19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
-                                </svg>
-                            </span>
-
-                            <span class="mr-16 pr-2 flex items-center">
-                                Roles
-                                <svg
-                                    class="ml-1 h-5 w-5 fill-current"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M18 21l-4-4h3V7h-3l4-4 4 4h-3v10h3M2
-                                        19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
-                                </svg>
-                            </span>
-
-                            <span class="mr-12 flex items-center">
-                                Status
-                                <svg
-                                    class="ml-1 h-5 w-5 fill-current"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M18 21l-4-4h3V7h-3l4-4 4 4h-3v10h3M2
-                                        19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
-                                </svg>
-                            </span>
-                            <span class="mr-16 flex items-center">
-                                Inscription date
-                                <svg
-                                    class="ml-1 h-5 w-5 fill-current"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        d="M18 21l-4-4h3V7h-3l4-4 4 4h-3v10h3M2
-                                        19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
-                                </svg>
-                            </span>
+                        <!-- <div class="w-56 flex items-center">
+                            <span>Name</span>
                         </div>
-
+                        <div class="w-56 flex items-center">
+                            <span>Username</span>
+                        </div>
+                        <div class="w-56 flex items-center">
+                            Email
+                        </div>
+                        <div class="w-28 flex items-center">
+                            Roles
+                        </div>
+                        <div class="w-28 flex items-center">
+                            Status
+                        </div>
+                        <div class="w-36 flex items-center">
+                            Inscription date
+                        </div> -->
                     </div>
-                    <div v-for="user in this.users" v-bind:key="user.id">
-                        <div
-                            class="mt-2 flex px-4 py-4 justify-between bg-white
-                            dark:bg-gray-600 shadow-xl rounded-lg cursor-pointer ">
-                            <!-- Card -->
-                            <div class="flex justify-between">
-                                <!-- Left side -->
-
-                                <img
-                                    class="h-12 w-12 rounded-full object-cover"
-                                    src="https://picsum.photos/200"
-                                    alt="" />
-
-                                <div
-                                    class="ml-4 flex flex-col capitalize text-gray-600
-                                    dark:text-gray-400">
-                                    <span>name</span>
-                                    <span class="mt-2 text-black dark:text-gray-200">
-                                        {{user.first_name}} {{user.last_name}}
-                                    </span>
-                                </div>
-
-                                <div
-                                    class="ml-12 flex flex-col capitalize text-gray-600
-                                    dark:text-gray-400">
-                                    <span>username</span>
-                                    <span class="mt-2 text-black dark:text-gray-200">
-                                        {{user.username}}
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                            <div class="flex">
-                                <!-- Rigt side -->
-
-                                <div
-                                    class="mr-16 flex flex-col capitalize text-gray-600
-                                    dark:text-gray-400">
-                                    <span>Email</span>
-                                    <span class="mt-2 text-black dark:text-gray-200">
-                                        {{user.email}}
-                                    </span>
-                                </div>
-
-                                <div
-                                    class="mr-16 flex flex-col capitalize text-gray-600
-                                    dark:text-gray-400">
-                                    <span>Roles</span>
-                                    <div v-for="role in user.roles" v-bind:key="role.id">
-                                        <span class="mt-2 text-black dark:text-gray-200">
-                                            {{role.name}}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="mr-16 flex flex-col capitalize text-gray-600
-                                    dark:text-gray-400">
-                                    <span>Status</span>
-                                    <span class="mt-2 text-black dark:text-gray-200">
-                                        None
-                                    </span>
-                                </div>
-
-                                <div
-                                    class="mr-8 flex flex-col capitalize text-gray-600
-                                    dark:text-gray-400">
-                                    <span>Inscription date</span>
-                                    <span class="mt-2 text-black dark:text-gray-200">
-                                        {{configDateTime(user.created_at)}}
-                                    </span>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
+                        <user-card v-for="user in this.users" v-bind:key="user.id" v-bind:user="user"/>
                 </div>
-
 	        </main>
         </div>
     </admin-layout>
@@ -212,24 +79,47 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
-import moment from 'moment'
+import UserCard from '@/Components/Admin/UserCard'
 
 export default {
+    components: {
+        AdminLayout,UserCard
+    },
+
     props: ['users'],
 
-    components: {
-        AdminLayout,
+    data() {
+        return {
+            sort:null,
+            search:null
+        };
     },
-    methods:{
-        //date configuration with moment.js
-        configDateTime(date) {
-            return moment(date).locale("fr").format("Do MMM YYYY");
-        },
+
+    methods: {
+        Sort(parameter){
+            switch (parameter) {
+                case 'asc.id':
+                        this.users.sort(function(a, b) {
+                            return a.id - b.id;
+                        });
+                        this.sort = parameter
+                    break;
+                case 'desc.id':
+                        this.users.sort(function(a, b) {
+                            return a.id - b.id;
+                        }).reverse();
+                        this.sort = parameter
+                    break;
+                default:
+                    this.sort = null
+                    console.log(`Sorry, we are out of ${parameter}.`);
+            }
+        }
     },
-     beforeMount(){
-        //  this.users.forEach(user => {
-        //      console.log(user)
-        //  });
+
+    beforeMount(){
+        console.log(route().params['roles'])
     },
 }
 </script>
+

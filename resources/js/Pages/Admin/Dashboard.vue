@@ -34,9 +34,7 @@
                             </span>
                         </div>
                     </div>
-
                 </div>
-
 	        </main>
         </div>
     </admin-layout>
