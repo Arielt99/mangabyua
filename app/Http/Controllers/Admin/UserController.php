@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
 
 
 class UserController extends Controller
@@ -99,11 +102,16 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  $id, Request $request
+     * @return json
      */
     public function destroy($id)
     {
-        //
+        if(Auth::user()->hasRole('Super-Admin')){
+
+            User::findOrFail($id)->delete();
+
+            return redirect()->route('admin.user.index');
+        }
     }
 }

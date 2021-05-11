@@ -56,9 +56,6 @@
             </ul>
 
             <div class="p-2 flex items-center border-t-2 border-gray-300 space-x-4">
-                <div class="relative inline-flex">
-                    <img class='w-8 h-8 object-cover rounded-full' alt='User avatar' src='https://images.unsplash.com/photo-1477118476589-bff2c5c4cfbb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=200' />
-                </div>
                 <div>
                     <h3 class="font-semibold tracking-wide text-gray-800">
                         {{this.$page.props.user.first_name}} {{this.$page.props.user.last_name}}

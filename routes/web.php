@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -30,15 +31,17 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::group([
-    'prefix' => 'admin',
-    'as' => 'admin.',
-    'middleware' => [
-        'auth','role:Super-Admin'
-    ],
-], function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-    Route::get('/user', [UserController::class, 'index'])->name('user.index');
-    Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/login', function () {
+        return Inertia::render('Admin/Auth/Login');
+    });
+    Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
+
+    Route::group(['middleware' => 'auth','role:Super-Admin'], function () {
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/user', [UserController::class, 'index'])->name('user.index');
+        Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
+        Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    });
 
 });
