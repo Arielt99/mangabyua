@@ -31,6 +31,10 @@
                                 Readers
                             </span>
                         </div>
+                        <div>
+                            <input type="search" v-model="search" placeholder="Search a user.." class="inline-flex items-center px-3 py-2 my-2 mx-1 rounded-md font-semibold text-xs"/>
+                            <button id="add" @click="Add" class="inline-flex items-center px-3 py-2 my-2 mx-1 ml-10 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">ajouter</button>
+                        </div>
                     </div>
                     <div class="mt-2 flex px-4 justify-between text-gray-600 dark:text-gray-400 capitalize">
                         <!-- List sorting -->
@@ -47,26 +51,9 @@
                                 <path d="M18 21l-4-4h3V7h-3l4-4 4 4h-3v10h3M2 19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
                             </svg>
                         </div>
-                        <!-- <div class="w-56 flex items-center">
-                            <span>Name</span>
-                        </div>
-                        <div class="w-56 flex items-center">
-                            <span>Username</span>
-                        </div>
-                        <div class="w-56 flex items-center">
-                            Email
-                        </div>
-                        <div class="w-28 flex items-center">
-                            Roles
-                        </div>
-                        <div class="w-28 flex items-center">
-                            Status
-                        </div>
-                        <div class="w-36 flex items-center">
-                            Inscription date
-                        </div> -->
                     </div>
-                        <user-card v-for="user in this.users" v-bind:key="user.id" v-bind:user="user"/>
+                    <user-card v-for="user in this.UserList" v-bind:key="user.id" v-bind:user="user"/>
+                    <p v-if="this.UserList.length == 0" class="w-auto m-auto text-center">No user to display</p>
                 </div>
 	        </main>
         </div>
@@ -87,21 +74,24 @@ export default {
     data() {
         return {
             sort:null,
-            search:null
+            search:''
         };
     },
 
     methods: {
+        Add(){
+            this.$inertia.visit(route('admin.users.create'))
+        },
         Sort(parameter){
             switch (parameter) {
                 case 'asc.id':
-                        this.users.sort(function(a, b) {
+                        this.UserList.sort(function(a, b) {
                             return a.id - b.id;
                         });
                         this.sort = parameter
                     break;
                 case 'desc.id':
-                        this.users.sort(function(a, b) {
+                        this.UserList.sort(function(a, b) {
                             return a.id - b.id;
                         }).reverse();
                         this.sort = parameter
@@ -113,8 +103,28 @@ export default {
         }
     },
 
+    computed:{
+        UserList() {
+            var results = [];
+            for(var i=0; i<this.users.length; i++) {
+                var matching = false;
+                for(var key in this.users[i]) {
+                    if(key=="last_name"||key=="first_name"||key=="username"||key=="email"){
+                        if(this.users[i][key].indexOf(this.search.toLowerCase())!=-1) {
+                            matching = true;
+                        }
+                    }
+                }
+                if(matching == true){
+                    results.push(this.users[i]);
+                }
+            }
+            return results;
+        },
+    },
+
     beforeMount(){
-        console.log(route().params['roles'])
+        //console.log(route().params['roles']);
     },
 }
 </script>

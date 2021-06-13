@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserPostRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+
+        return Inertia::render('Admin/User/Form', [
+            'roles' => $roles
+        ]);
     }
 
     /**
@@ -52,9 +57,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserPostRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $user = User::create($validated);
+
+        $user->syncRoles($request->roles);
+
+        return redirect()->route('admin.users.show', $user->id);
+
     }
 
     /**
@@ -84,7 +96,16 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = collect(User::find($id));
+
+        $users->put('roles', array_values(User::query()->find($id)->roles->pluck('id')->toArray()));
+
+        $roles = Role::all();
+
+        return Inertia::render('Admin/User/Form', [
+            'roles' => $roles,
+            'users' => $users,
+        ]);
     }
 
     /**
@@ -94,9 +115,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserPostRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $user = User::findOrFail($id);
+
+        $user->update($validated);
+
+        $user->syncRoles($request->roles);
+
+        return $request->wantsJson()
+        ? new JsonResponse('', 200)
+        : back()->with('status', 'User updated');
     }
 
     /**
@@ -111,7 +142,7 @@ class UserController extends Controller
 
             User::findOrFail($id)->delete();
 
-            return redirect()->route('admin.user.index');
+            return redirect()->route('admin.users.index');
         }
     }
 }

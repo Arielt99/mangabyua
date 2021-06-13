@@ -1,25 +1,25 @@
 <template>
     <div class="mt-2 px-4 py-4 flex justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg">
         <!-- Card -->
-        <inertia-link :href="route('admin.user.show', {id: user.id})" class="w-20 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-20 flex flex-col capitalize text-gray-600 dark:text-gray-400">
             <span>id</span>
             <div class="mt-2 text-black dark:text-gray-200">
                 #{{user.id}}
             </div>
         </inertia-link>
-        <inertia-link :href="route('admin.user.show', {id: user.id})" class="w-56 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col capitalize text-gray-600 dark:text-gray-400">
             <span>Name</span>
             <div class="mt-2 text-black dark:text-gray-200">
                 {{user.first_name}} {{user.last_name}}
             </div>
         </inertia-link>
-        <inertia-link :href="route('admin.user.show', {id: user.id})" class="w-56 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col capitalize text-gray-600 dark:text-gray-400">
             <span>username</span>
-            <span :href="route('admin.user.show', {id: user.id})" class="mt-2 text-black dark:text-gray-200">
+            <span :href="route('admin.users.show', {id: user.id})" class="mt-2 text-black dark:text-gray-200">
                 {{user.username}}
             </span>
         </inertia-link>
-        <inertia-link :href="route('admin.user.show', {id: user.id})" class="w-56 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col capitalize text-gray-600 dark:text-gray-400">
             <span>Email</span>
             <span class="mt-2 text-black dark:text-gray-200">
                 {{user.email}}
@@ -42,14 +42,14 @@
         <div class="w-28 flex flex-col capitalize text-gray-600 dark:text-gray-400">
             <span>Actions</span>
             <div class="flex space-between">
-                <span class="w-7 bg-yellow-500 text-gray-200 rounded hover:bg-yellow-400 px-1 py-1 focus:outline-none mx-1">
+                <span @click="Edit()" class="w-7 bg-yellow-500 text-gray-200 rounded hover:bg-yellow-400 px-1 py-1 focus:outline-none mx-1 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-white" viewBox="0 0 64 64">
                         <path data-name="layer1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M56 2.4l-26.1 26-4 9.7 9.7-4.1 26-26L56 2.4z" stroke-linejoin="round" stroke-linecap="round"></path>
                         <path data-name="layer2" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M34.4 11.6h-32v50h50v-32" stroke-linejoin="round" stroke-linecap="round"></path>
                         <path data-name="layer1" fill="none" stroke="#202020" stroke-miterlimit="10" stroke-width="2" d="M50.8 7.6l5.6 5.6" stroke-linejoin="round" stroke-linecap="round"></path>
                     </svg>
                 </span>
-                <span @click="Delete()" class="w-7 bg-red-500 text-gray-200 rounded hover:bg-red-400 px-1 py-1 focus:outline-none mx-1">
+                <span @click="Delete()" class="w-7 bg-red-500 text-gray-200 rounded hover:bg-red-400 px-1 py-1 focus:outline-none mx-1 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-white" viewBox="0 0 64 64">
                         <path data-name="layer2" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M6 10h52m-36 0V5.9A3.9 3.9 0 0 1 25.9 2h12.2A3.9 3.9 0 0 1 42 5.9V10m10.5 0l-2.9 47.1a5 5 0 0 1-4.9 4.9H19.3a5 5 0 0 1-4.9-4.9L11.5 10" stroke-linejoin="round" stroke-linecap="round"></path>
                         <path data-name="layer1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M32 18v36M22 18l2 36m18-36l-2 36" stroke-linejoin="round" stroke-linecap="round"></path>
@@ -103,20 +103,20 @@
                 })
             }
         },
-        
+
         methods:{
             //date configuration with moment.js
             configDateTime(date) {
                 return moment(date).locale("en").format("MMM Do YYYY");
             },
-            // Modify(){
-            //     this.$inertia.visit(route('updatepost',{post_slug : this.post.slug}))
-            // },
+            Edit(){
+                this.$inertia.visit(route('admin.users.edit', {id: this.user.id}))
+            },
             Delete(){
                 this.ConfirmDeletion = true
             },
             deleteUser(){
-                this.delUser.post(route('admin.user.destroy', {id: this.user.id}), {
+                this.delUser.post(route('admin.users.destroy', {id: this.user.id}), {
                     preserveScroll: true
                 })
             },

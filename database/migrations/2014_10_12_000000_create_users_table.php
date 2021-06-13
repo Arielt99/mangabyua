@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration
             $table->dateTime('cgu_at')->nullable();
             $table->dateTime('cgv_at')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('role_id')->default(3);
             $table->rememberToken();
             $table->timestamps();
         });
