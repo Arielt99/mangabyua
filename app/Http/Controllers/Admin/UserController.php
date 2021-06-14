@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 
 
@@ -76,14 +75,14 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::query()
+        $users = User::query()
                         ->with('roles')
                         ->find($id);
-        if(!$user){
+        if(!$users){
             return back();
         }
         return Inertia::render('Admin/User/Show', [
-            'user' => $user
+            'users' => $users
         ]);
     }
 
@@ -95,8 +94,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $users = collect(User::findOrFail($id));
-
+        $users = collect(User::find($id));
+        if(!$users){
+            return back();
+        }
         $users->put('roles', array_values(User::query()->findOrFail($id)->roles->pluck('id')->toArray()));
 
         $roles = Role::all();

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\TagController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,14 +39,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
     Route::group(['middleware' => 'auth','role:Super-Admin'], function () {
+
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
-        Route::get('/users', [UserController::class, 'index'])->name('users.index');
-        Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-        Route::post('/users/create', [UserController::class, 'store'])->name('users.store');
-        Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-        Route::put('/users/{id}/edit', [UserController::class, 'update'])->name('users.update');
-        Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-        Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+        /**
+         * Manage the users.
+         */
+        Route::resource('users', UserController::class);
+
+        /**
+         * Manage the tags.
+         */
+        Route::resource('tags', TagController::class);
     });
 
 });

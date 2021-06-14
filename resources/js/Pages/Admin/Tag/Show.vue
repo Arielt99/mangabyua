@@ -10,20 +10,20 @@
                                 <path d="M16 34L3 46l13 12" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke="#202020" fill="none" data-name="layer1" stroke-linejoin="round"></path>
                             </svg>
                         </a>
-                        <span>{{this.user.username}}’s informations</span>
+                        <span>{{this.tags.name}}’s informations</span>
                     </h2>
                     <div class="pb-2 flex items-center justify-between text-gray-600 dark:text-gray-400 border-b dark:border-gray-600">
                         <div class="flex ">
                             <span class="pr-5">
                                 created
                                 <span class="text-red-500 dark:text-red-200">
-                                    {{configDateTime(this.user.created_at)}}
+                                    {{configDateTime(this.tags.created_at)}}
                                 </span>
                             </span>
                             <span class="pr-5">
                                 last update
                                 <span class="text-red-500 dark:text-red-200">
-                                    {{configDateTime(this.user.updated_at)}}
+                                    {{configDateTime(this.tags.updated_at)}}
                                 </span>
                             </span>
                         </div>
@@ -47,39 +47,21 @@
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
-                                    <div v-if="this.user.first_name" class="col-span-6 sm:col-span-3">
-                                        <label for="first_name" class="block text-sm font-medium text-gray-700">First name</label>
-                                        <p>{{this.user.first_name}}</p>
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                                        <p>{{this.tags.name}}</p>
                                     </div>
-
-                                    <div v-if="this.user.last_name" class="col-span-6 sm:col-span-3">
-                                        <label for="last_name" class="block text-sm font-medium text-gray-700">Last name</label>
-                                        <p>{{this.user.last_name}}</p>
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
+                                        <p>{{this.tags.slug}}</p>
                                     </div>
-
-                                    <div class="col-span-6 sm:col-span-3">
-                                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                                        <p>{{this.user.username}}</p>
+                                    <div class="col-span-2 sm:col-span-2">
                                     </div>
-
-                                    <div v-if="this.user.birthday" class="col-span-6 sm:col-span-2">
-                                        <label for="birthday" class="block text-sm font-medium text-gray-700">Birthday</label>
-                                        <p>{{configDateTime(this.user.birthday)}}</p>
-                                    </div>
-
-                                    <div class="col-span-6 sm:col-span-4">
-                                        <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                                        <p>{{this.user.email}}</p>
-                                    </div>
-
-                                    <div class="col-span-6 sm:col-span-4">
-                                        <label for="roles" class="block text-sm font-medium text-gray-700">Roles</label>
-                                        <div class="flex flex-row">
-                                            <p v-for="(role, index) in this.user.roles" v-bind:key="role.id">
-                                                <span v-if="index < this.user.roles.length && index != 0">,</span>
-                                                {{role.name}}
-                                            </p>
-                                        </div>
+                                    <div class="col-span-1 sm:col-span-1">
+                                        <label for="isMature" class="flex flex-row content-center text-sm font-medium text-gray-700 inline row">
+                                            <input type="checkbox" disabled true-value=1 false-value=0 v-model="this.tags.isMature" name="isMature" id="isMature" class=" mr-2 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                            <p>Mature content</p>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +85,7 @@
                 Nevermind
             </jet-secondary-button>
 
-            <jet-danger-button class="ml-2" @click="deleteUser" :class="{ 'opacity-25': delUser.processing }" :disabled="delUser.processing">
+            <jet-danger-button class="ml-2" @click="deleteUser" :class="{ 'opacity-25': delTag.processing }" :disabled="delTag.processing">
                 Delete User
             </jet-danger-button>
         </template>
@@ -124,16 +106,16 @@
             JetDangerButton
         },
 
-        props: ['user'],
+        props: ['tags'],
 
         data () {
             return {
                 ConfirmDeletion:false,
 
-                delUser: this.$inertia.form({
+                delTag: this.$inertia.form({
                     '_method': 'DELETE',
                 },{
-                    bag: 'deleteUser'
+                    bag: 'deleteTag'
                 })
             }
         },
@@ -147,13 +129,13 @@
                 return moment(date).locale("en").format("MMM Do YYYY");
             },
             Edit(){
-                this.$inertia.visit(route('admin.users.edit', {id: this.user.id}))
+                this.$inertia.visit(route('admin.tags.edit', {id: this.tags.id}))
             },
             Delete(){
                 this.ConfirmDeletion = true
             },
             deleteUser(){
-                this.delUser.post(route('admin.users.destroy', {id: this.user.id}), {
+                this.delTag.post(route('admin.tags.destroy', {id: this.tags.id}), {
                     preserveScroll: true
                 })
             },
