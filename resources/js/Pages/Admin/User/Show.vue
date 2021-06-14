@@ -3,7 +3,13 @@
         <div class="h-screen w-full flex overflow-hidden">
             <main class="flex-1 flex flex-col bg-gray-100 dark:bg-gray-700 transition duration-500 ease-in-out overflow-y-auto">
                 <div class="mx-10 my-2">
-                    <h2 class="my-4 text-4xl font-semibold dark:text-gray-400">
+                    <h2 class="my-4 flex flex-row text-4xl font-semibold dark:text-gray-400">
+                        <a href="#" class="pr-3 flex content-center" @click="Back">
+                            <svg viewBox="0 0 64 64" class="w-7 fill-current" xmlns="http://www.w3.org/2000/svg" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <path stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke="#202020" fill="none" d="M3 46h44a15 15 0 0 0 15-15 15 15 0 0 0-15-15H2" data-name="layer2" stroke-linejoin="round"></path>
+                                <path d="M16 34L3 46l13 12" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke="#202020" fill="none" data-name="layer1" stroke-linejoin="round"></path>
+                            </svg>
+                        </a>
                         <span>{{this.user.username}}’s profile</span>
                     </h2>
                     <div class="pb-2 flex items-center justify-between text-gray-600 dark:text-gray-400 border-b dark:border-gray-600">
@@ -42,12 +48,12 @@
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
                                     <div class="grid grid-cols-6 gap-6">
-                                        <div class="col-span-6 sm:col-span-3">
+                                        <div v-if="this.user.first_name" class="col-span-6 sm:col-span-3">
                                             <label for="first_name" class="block text-sm font-medium text-gray-700">First name</label>
                                             <p>{{this.user.first_name}}</p>
                                         </div>
 
-                                        <div class="col-span-6 sm:col-span-3">
+                                        <div v-if="this.user.last_name" class="col-span-6 sm:col-span-3">
                                             <label for="last_name" class="block text-sm font-medium text-gray-700">Last name</label>
                                             <p>{{this.user.last_name}}</p>
                                         </div>
@@ -57,7 +63,7 @@
                                             <p>{{this.user.username}}</p>
                                         </div>
 
-                                        <div class="col-span-6 sm:col-span-2">
+                                        <div v-if="this.user.birthday" class="col-span-6 sm:col-span-2">
                                             <label for="birthday" class="block text-sm font-medium text-gray-700">Birthday</label>
                                             <p>{{configDateTime(this.user.birthday)}}</p>
                                         </div>
@@ -135,6 +141,9 @@
         },
 
         methods:{
+            Back() {
+                window.history.back();
+            },
             //date configuration with moment.js
             configDateTime(date) {
                 return moment(date).locale("en").format("MMM Do YYYY");

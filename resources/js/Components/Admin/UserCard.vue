@@ -1,31 +1,31 @@
 <template>
     <div class="mt-2 px-4 py-4 flex justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg">
         <!-- Card -->
-        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-20 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-20 flex flex-col text-gray-600 dark:text-gray-400">
             <span>id</span>
             <div class="mt-2 text-black dark:text-gray-200">
                 #{{user.id}}
             </div>
         </inertia-link>
-        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
             <span>Name</span>
             <div class="mt-2 text-black dark:text-gray-200">
                 {{user.first_name}} {{user.last_name}}
             </div>
         </inertia-link>
-        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
             <span>username</span>
-            <span :href="route('admin.users.show', {id: user.id})" class="mt-2 text-black dark:text-gray-200">
+            <span class="mt-2 text-black dark:text-gray-200">
                 {{user.username}}
             </span>
         </inertia-link>
-        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
             <span>Email</span>
             <span class="mt-2 text-black dark:text-gray-200">
                 {{user.email}}
             </span>
         </inertia-link>
-        <div class="w-28 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <div class="w-28 flex flex-col text-gray-600 dark:text-gray-400">
             <span>Roles</span>
             <div v-for="role in user.roles" v-bind:key="role.id" class="mt-2">
                 <span class="mb-1 text-black dark:text-gray-200">
@@ -33,13 +33,13 @@
                 </span>
             </div>
         </div>
-        <div class="w-36 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <div class="w-36 flex flex-col text-gray-600 dark:text-gray-400">
             <span>Inscription date</span>
             <span class="mt-2 text-black dark:text-gray-200">
                 {{configDateTime(user.created_at)}}
             </span>
         </div>
-        <div class="w-28 flex flex-col capitalize text-gray-600 dark:text-gray-400">
+        <div class="w-28 flex flex-col text-gray-600 dark:text-gray-400">
             <span>Actions</span>
             <div class="flex space-between">
                 <span @click="Edit()" class="w-7 bg-yellow-500 text-gray-200 rounded hover:bg-yellow-400 px-1 py-1 focus:outline-none mx-1 cursor-pointer">

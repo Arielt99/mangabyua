@@ -33,7 +33,7 @@
                         </div>
                         <div>
                             <input type="search" v-model="search" placeholder="Search a user.." class="inline-flex items-center px-3 py-2 my-2 mx-1 rounded-md font-semibold text-xs"/>
-                            <button id="add" @click="Add" class="inline-flex items-center px-3 py-2 my-2 mx-1 ml-10 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">ajouter</button>
+                            <button id="add" @click="Add" class="inline-flex items-center px-3 py-2 my-2 mx-1 ml-10 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">Create a User</button>
                         </div>
                     </div>
                     <div class="mt-2 flex px-4 justify-between text-gray-600 dark:text-gray-400 capitalize">
@@ -110,7 +110,7 @@ export default {
                 var matching = false;
                 for(var key in this.users[i]) {
                     if(key=="last_name"||key=="first_name"||key=="username"||key=="email"){
-                        if(this.users[i][key].indexOf(this.search.toLowerCase())!=-1) {
+                        if(this.users[i][key] != null && this.users[i][key].indexOf(this.search.toLowerCase())!=-1) {
                             matching = true;
                         }
                     }

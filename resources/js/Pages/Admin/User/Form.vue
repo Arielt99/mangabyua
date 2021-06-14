@@ -18,47 +18,47 @@
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
                                     <div class="grid grid-cols-6 gap-6">
-                                        <div class="col-span-6 sm:col-span-3">
+                                        <div class="col-span-3 sm:col-span-3">
                                             <label for="first_name" class="block text-sm font-medium text-gray-700">First name</label>
                                             <input type="text" v-model="this.formUser.first_name" v-bind:class="{ error: this.formUser.errors.first_name}" name="first_name" id="first_name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <jet-input-error :message="this.formUser.errors.first_name" class="mt-2" />
                                         </div>
-                                        <div class="col-span-6 sm:col-span-3">
+                                        <div class="col-span-3 sm:col-span-3">
                                             <label for="last_name" class="block text-sm font-medium text-gray-700">Last name</label>
                                             <input type="text" v-model="this.formUser.last_name" v-bind:class="{ error: this.formUser.errors.last_name}" name="last_name" id="last_name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <jet-input-error :message="this.formUser.errors.last_name" class="mt-2" />
                                         </div>
 
-                                        <div class="col-span-6 sm:col-span-4">
+                                        <div class="col-span-4 sm:col-span-4">
                                             <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
                                             <input type="text" v-model="this.formUser.username" v-bind:class="{ error: this.formUser.errors.username}" name="username" id="username" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <jet-input-error :message="this.formUser.errors.username" class="mt-2" />
                                         </div>
 
-                                        <div class="col-span-6 sm:col-span-2">
+                                        <div class="col-span-2 sm:col-span-2">
                                             <label for="birthday" class="block text-sm font-medium text-gray-700">Birthday</label>
                                             <input type="date" v-model="this.formUser.birthday" v-bind:class="{ error: this.formUser.errors.birthday}" name="birthday" id="birthday" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <jet-input-error :message="this.formUser.errors.birthday" class="mt-2" />
                                         </div>
 
-                                        <div class="col-span-6 sm:col-span-4">
+                                        <div class="col-span-4 sm:col-span-4">
                                             <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
                                             <input type="email" v-model="this.formUser.email" v-bind:class="{ error: this.formUser.errors.email}" name="email" id="email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <jet-input-error :message="this.formUser.errors.email" class="mt-2" />
                                         </div>
 
-                                        <div class="col-span-6 sm:col-span-4">
+                                        <div class="col-span-4 sm:col-span-4">
                                             <label for="roles" class="block text-sm font-medium text-gray-700">Roles</label>
                                             <multiselect v-model="this.formUser.roles" v-bind:class="{ error: this.formUser.errors.roles}" name="roles" mode="tags" :options="this.roles" valueProp="id" :searchable="true" trackBy="name" label="name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                                             <jet-input-error :message="this.formUser.errors.roles" class="mt-2" />
                                         </div>
 
-                                        <div class="col-span-6 sm:col-span-4">
+                                        <div class="col-span-4 sm:col-span-4">
                                             <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                                             <input type="password" v-model="this.formUser.password" v-bind:class="{ error: this.formUser.errors.password}" name="password" id="password" ref="password" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <jet-input-error :message="this.formUser.errors.password" class="mt-2" />
                                         </div>
-                                        <div class="col-span-6 sm:col-span-4">
+                                        <div class="col-span-4 sm:col-span-4">
                                             <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Password confirmation</label>
                                             <input type="password" v-model="this.formUser.password_confirmation" v-bind:class="{ error: this.formUser.errors.password}" name="password_confirmation" id="password_confirmation" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                         </div>
@@ -142,28 +142,48 @@ export default {
         },
         submit() {
             if(this.route().current('admin.users.create')){
+                var tempBirthday = this.formUser.birthday
+                this.formUser.birthday = new Date(this.formUser.birthday)
+                if (!isNaN(this.formUser.birthday)){
+                    this.formUser.birthday = tempBirthday
+
+                }
                 this.formUser.post(this.route('admin.users.store'), {
                     preserveScroll: true,
                     onError: () => {
+                        this.formUser.birthday = tempBirthday
                         if(this.formUser.errors.password){
                             this.formUser.password = '';
                             this.formUser.password_confirmation = '';
                             this.$refs.password.focus()
                         }
-
+                    },
+                    onSuccess: () => {
+                            this.formUser.password = '';
+                            this.formUser.password_confirmation = '';
                     }
                 })
             }
             else if(this.route().current('admin.users.edit')){
+                var tempBirthday = this.formUser.birthday
+                this.formUser.birthday = new Date(this.formUser.birthday)
+                if (!isNaN(this.formUser.birthday)){
+                    this.formUser.birthday = tempBirthday
+
+                }
                 this.formUser.put(this.route('admin.users.update', {id: this.users.id}), {
                     preserveScroll: true,
                     onError: () => {
+                        this.formUser.birthday = tempBirthday
                         if(this.formUser.errors.password){
                             this.formUser.password = '';
                             this.formUser.password_confirmation = '';
                             this.$refs.password.focus()
                         }
-
+                    },
+                    onSuccess: () => {
+                        this.formUser.password = '';
+                        this.formUser.password_confirmation = '';
                     }
                 })
             }

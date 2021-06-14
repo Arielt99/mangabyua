@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserPostRequest;
+use App\Http\Requests\UserFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +57,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserPostRequest $request)
+    public function store(UserFormRequest $request)
     {
         $validated = $request->validated();
 
@@ -65,8 +65,7 @@ class UserController extends Controller
 
         $user->syncRoles($request->roles);
 
-        return redirect()->route('admin.users.show', $user->id);
-
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -96,9 +95,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $users = collect(User::find($id));
+        $users = collect(User::findOrFail($id));
 
-        $users->put('roles', array_values(User::query()->find($id)->roles->pluck('id')->toArray()));
+        $users->put('roles', array_values(User::query()->findOrFail($id)->roles->pluck('id')->toArray()));
 
         $roles = Role::all();
 
@@ -115,7 +114,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserPostRequest $request, $id)
+    public function update(UserFormRequest $request, $id)
     {
         $validated = $request->validated();
 
