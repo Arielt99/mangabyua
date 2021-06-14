@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="col-span-1 sm:col-span-1">
                                         <label for="isMature" class="flex flex-row content-center text-sm font-medium text-gray-700 inline row">
-                                            <input type="checkbox" disabled true-value=1 false-value=0 v-model="this.tags.isMature" name="isMature" id="isMature" class=" mr-2 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                            <input type="checkbox" disabled v-model="this.tags.isMature" true-value=1 false-value=0 name="isMature" id="isMature" class=" mr-2 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <p>Mature content</p>
                                         </label>
                                     </div>

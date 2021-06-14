@@ -32,7 +32,7 @@
                                         </div>
                                         <div class="col-span-1 sm:col-span-1">
                                             <label for="isMature" class="flex flex-row content-center text-sm font-medium text-gray-700 inline row">
-                                                <input type="checkbox" v-model="this.formTag.isMature" v-bind:class="{ error: this.formTag.errors.isMature}" name="isMature" id="isMature" class=" mr-2 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                                <input type="checkbox" v-model="this.formTag.isMature" true-value=1 false-value=0 v-bind:class="{ error: this.formTag.errors.isMature}" name="isMature" id="isMature" class=" mr-2 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
                                                 <p>Mature content</p>
                                             </label>
                                             <jet-input-error :message="this.formTag.errors.isMature" class="mt-2" />
@@ -92,7 +92,7 @@ export default {
         formTag: this.$inertia.form({
                 name: this.tags.name,
                 slug: this.tags.slug,
-                isMature: (this.tags.isMature == 1 ? true : false ),
+                isMature: this.tags.isMature,
             })
         }
 
