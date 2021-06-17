@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Tag extends Model
+class Manga extends Model
 {
     use HasFactory, SoftDeletes;
+
 
     /**
      * The attributes that are mass assignable.
@@ -16,16 +17,25 @@ class Tag extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'title',
         'slug',
+        'description',
         'isMature',
     ];
 
     /**
      *
      */
-    public function mangas()
+    public function tags()
     {
-        return $this->belongsToMany(Manga::class, 'tag_manga');
+        return $this->belongsToMany(Tag::class, 'tag_manga');
+    }
+
+    /**
+     *
+     */
+    public function mangakas()
+    {
+        return $this->belongsToMany(User::class, 'mangaka_manga', 'manga_id', 'mangaka_id');
     }
 }

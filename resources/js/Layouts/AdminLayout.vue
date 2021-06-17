@@ -3,7 +3,7 @@
     <div class="min-h-screen flex flew-row w-full bg-white">
         <nav class="h-screen flex flex-col w-64 bg-gray-50">
             <div class="p-4">
-                <img src="https://tailwindcomponents.com/svg/logo-color.svg" />
+                <h2 class="text-2xl	font-black uppercase text-center">Mangabyua</h2>
             </div>
             <ul class="p-2 space-y-2 flex-1 overflow-auto" style="scrollbar-width: thin;">
                 <li>

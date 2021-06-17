@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TagFormRequest;
+use App\Http\Requests\Admin\TagFormRequest;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;

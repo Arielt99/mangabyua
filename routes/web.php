@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Mangaka\AuthController as MangakaAuthController;
+use App\Http\Controllers\Mangaka\MangaController;
+use App\Http\Controllers\Mangaka\MangakaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,11 +35,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
+/**
+ * Admin routes.
+ */
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/login', function () {
         return Inertia::render('Admin/Auth/Login');
     });
-    Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'authenticate'])->name('login');
 
     Route::group(['middleware' => 'auth','role:Super-Admin'], function () {
 
@@ -51,6 +57,26 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
          * Manage the tags.
          */
         Route::resource('tags', TagController::class);
+    });
+
+});
+
+/**
+ * Mangaka routes.
+ */
+Route::group(['prefix' => 'mangaka', 'as' => 'mangaka.'], function () {
+    Route::get('/login', function () {
+        return Inertia::render('Mangaka/Auth/Login');
+    });
+    Route::post('/login', [MangakaAuthController::class, 'authenticate'])->name('login');
+
+    Route::group(['middleware' => 'auth','role:Mangaka'], function () {
+        Route::get('/dashboard', [MangakaController::class, 'index'])->name('dashboard');
+
+        /**
+         * Manage the mangas.
+         */
+        Route::resource('mangas', MangaController::class);
     });
 
 });

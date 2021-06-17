@@ -57,4 +57,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     *
+     */
+    public function mangas()
+    {
+        return $this->belongsToMany(Manga::class, 'mangaka_manga', 'mangaka_id', 'manga_id');
+    }
+
+    /**
+     * return user with role mangaka
+     *
+     *
+     * @param $query
+     */
+    public function scopeWhereRoleIsMangaka($query)
+    {
+        return $query->role('Mangaka');
+    }
+
+    /**
+     * return user with role reader
+     *
+     *
+     * @param $query
+     */
+    public function scopeWhereRoleIsReader($query)
+    {
+        return $query->role('Reader');
+    }
 }

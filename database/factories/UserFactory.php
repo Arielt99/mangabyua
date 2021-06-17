@@ -25,7 +25,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'username' => 'user-' . random_int(1000, 9999),
+            'username' => 'user-' . $this->faker->unique()->numberBetween(1000, 9999),
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,

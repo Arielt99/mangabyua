@@ -115,7 +115,7 @@ export default {
     },
 
     beforeMount(){
-        //console.log(route().params['roles']);
+        //console.log(route().params['tags']);
     },
 }
 </script>

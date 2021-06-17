@@ -18,6 +18,9 @@ class LoginResponse implements LoginResponseContract
         if (Auth::user()->hasRole('Super-Admin')) {
             $routeToRedirect = route('admin.dashboard');
         }
+        if (Auth::user()->hasRole('Mangaka')) {
+            $routeToRedirect = route('mangaka.dashboard');
+        }
         return $request->wantsJson()
             ? response()->json(['two_factor' => false])
             : redirect()->intended($routeToRedirect); // This is the line you want to modify so the application behaves the way you want.
