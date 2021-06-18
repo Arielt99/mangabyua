@@ -74,11 +74,13 @@
 
                                     <div class="col-span-6 sm:col-span-4">
                                         <label for="roles" class="block text-sm font-medium text-gray-700">Roles</label>
-                                        <div class="flex flex-row">
-                                            <p v-for="(role, index) in this.users.roles" v-bind:key="role.id">
-                                                <span v-if="index < this.users.roles.length && index != 0">,</span>
-                                                {{role.name}}
-                                            </p>
+                                            <div class="flex flex-row">
+                                            <div v-for="(role, index) in this.users.roles" v-bind:key="role.id" class="mt-2">
+                                                <span v-if="index < this.users.roles.length && index != 0">, </span>
+                                                <span class="mb-1 text-black dark:text-gray-200">
+                                                    {{role.name}}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -157,9 +159,6 @@
                     preserveScroll: true
                 })
             },
-        },
-        beforeMount(){
-            //console.log(this.users);
         },
     }
 </script>

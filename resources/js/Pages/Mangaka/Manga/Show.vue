@@ -47,13 +47,36 @@
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
-                                    <div class="col-span-4 sm:col-span-4">
+                                    <div class="col-span-3 sm:col-span-3">
                                         <label for="name" class="block text-sm font-medium text-gray-700">Title</label>
                                         <p>{{this.mangas.title}}</p>
                                     </div>
-                                    <div class="col-span-4 sm:col-span-4">
+
+                                    <div class="col-span-3 sm:col-span-3">
                                         <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
                                         <p>{{this.mangas.slug}}</p>
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <label for="mangakas" class="block text-sm font-medium text-gray-700">Authors</label>
+                                        <div class="flex flex-row">
+                                            <div v-for="(mangaka, index) in this.mangas.mangakas" v-bind:key="mangaka.id" class="mt-2">
+                                                <span v-if="index < this.mangas.mangakas.length && index != 0">, </span>
+                                                <span class="mb-1 text-black dark:text-gray-200">
+                                                    {{mangaka.full_name}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <label for="tags" class="block text-sm font-medium text-gray-700">Tags</label>
+                                        <div class="flex flex-row">
+                                            <div v-for="(tag, index) in this.mangas.tags" v-bind:key="tag.id" class="mt-2">
+                                                <span v-if="index < this.mangas.tags.length && index != 0">, </span>
+                                                <span class="mb-1 text-black dark:text-gray-200">
+                                                    {{tag.name}}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-span-2 sm:col-span-2">
                                     </div>
@@ -139,6 +162,9 @@
                     preserveScroll: true
                 })
             },
+        },
+        beforeMount(){
+        console.log(this.mangas);
         },
     }
 </script>

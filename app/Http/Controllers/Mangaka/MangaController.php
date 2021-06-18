@@ -60,7 +60,20 @@ class MangaController extends Controller
      */
     public function show($id)
     {
-        //
+        $mangas = Manga::query()
+        ->with('mangakas')
+        ->with('tags')
+        ->whereHas('mangakas', function ($query) {
+            return $query->where('mangaka_id', Auth::user()->id);
+        })->find($id);
+
+        if(!$mangas){
+            return back();
+        }
+
+        return Inertia::render('Mangaka/Manga/Show', [
+            'mangas' => $mangas
+        ]);
     }
 
     /**

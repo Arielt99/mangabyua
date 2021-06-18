@@ -1,25 +1,25 @@
 <template>
     <div class="mt-2 px-4 py-4 flex justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg">
         <!-- Card -->
-        <inertia-link :href="route('admin.tags.show', {id: manga.id})" class="w-20 flex flex-col text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('mangaka.mangas.show', {id: manga.id})" class="w-20 flex flex-col text-gray-600 dark:text-gray-400">
             <span>id</span>
             <div class="mt-2 text-black dark:text-gray-200">
                 #{{manga.id}}
             </div>
         </inertia-link>
-        <inertia-link :href="route('admin.tags.show', {id: manga.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('mangaka.mangas.show', {id: manga.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
             <span>Name</span>
             <div class="mt-2 text-black dark:text-gray-200">
                 {{manga.title}}
             </div>
         </inertia-link>
-        <inertia-link :href="route('admin.tags.show', {id: manga.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('mangaka.mangas.show', {id: manga.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
             <span>Slug</span>
             <div class="mt-2 text-black dark:text-gray-200">
                 {{manga.slug}}
             </div>
         </inertia-link>
-        <inertia-link :href="route('admin.tags.show', {id: manga.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
+        <inertia-link :href="route('mangaka.mangas.show', {id: manga.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
             <span>Mature content</span>
             <span class="mt-2 text-green dark:text-gray-200">
                 {{manga.isMature ? 'true' : 'false'}}

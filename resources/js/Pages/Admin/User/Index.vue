@@ -122,10 +122,6 @@ export default {
             return results;
         },
     },
-
-    beforeMount(){
-        //console.log(route().params['users']);
-    },
 }
 </script>
 

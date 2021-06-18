@@ -36,8 +36,8 @@ class UserFormRequest extends FormRequest
 
         $passwordRequirement = 'required';
 
-        if(!is_null($this->route()->parameter('id'))){
-            $uniqueRule = Rule::unique('users')->ignore($this->route()->parameter('id'));
+        if(!is_null($this->route()->parameter('user'))){
+            $uniqueRule = Rule::unique('users')->ignore($this->route()->parameter('user'));
             $passwordRequirement = 'nullable';
         };
 
