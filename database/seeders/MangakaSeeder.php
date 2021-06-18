@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+
 use App\Models\User;
 use Carbon\Carbon;
 use Faker\Generator;
@@ -12,7 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Container\Container;
 use Spatie\Permission\Models\Role;
 
-class UserSeeder extends Seeder
+class MangakaSeeder extends Seeder
 {
     /**
      * The current Faker instance.
@@ -48,8 +49,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //generate users from json
-        $json = File::get("database/data/users.json");
+
+        //generate mangakas from json
+        $json = File::get("database/data/mangakas.json");
         $data = json_decode($json);
 
         foreach($data as $obj){
@@ -64,7 +66,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'cgu_at' => now(),
                 'cgv_at' => now(),
-            ))->assignRole(Role::findOrCreate('Reader'));
+            ))->assignRole(Role::findOrCreate('Mangaka'));
         }
     }
 }

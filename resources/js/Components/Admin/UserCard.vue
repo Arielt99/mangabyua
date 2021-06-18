@@ -10,7 +10,7 @@
         <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">
             <span>Name</span>
             <div class="mt-2 text-black dark:text-gray-200">
-                {{user.first_name}} {{user.last_name}}
+                {{user.full_name}}
             </div>
         </inertia-link>
         <inertia-link :href="route('admin.users.show', {id: user.id})" class="w-56 flex flex-col text-gray-600 dark:text-gray-400">

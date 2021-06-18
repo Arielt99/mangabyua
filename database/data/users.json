@@ -1,9 +1,8 @@
 [
     {
-        "first_name": "Super",
-        "last_name": "Admin",
-        "username": "Super-Admin",
-        "email": "superadmin@web.com",
-        "password": "Password1234"
+        "first_name": "User",
+        "last_name": "Test",
+        "username": "User-Test",
+        "email": "user.test@mangabyua.com"
     }
 ]

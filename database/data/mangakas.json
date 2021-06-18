@@ -1,0 +1,16 @@
+[
+    {
+        "first_name": "Kentarō",
+        "last_name": "Miura",
+        "username": "Kentarō-Miura",
+        "email": "kentaro.miura@mangabyua.com",
+        "birthday" : "1966-07-11"
+    },
+    {
+        "first_name": "Osamu",
+        "last_name": "Tezuka",
+        "username": "Osamu-Tezuka",
+        "email": "osamu.tezuka@mangabyua.com",
+        "birthday" : "1928-11-03"
+    }
+]

@@ -73,11 +73,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         $users = User::query()
                         ->with('roles')
-                        ->find($id);
+                        ->find($user->id);
         if(!$users){
             return back();
         }

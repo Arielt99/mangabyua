@@ -10,20 +10,20 @@
                                 <path d="M16 34L3 46l13 12" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke="#202020" fill="none" data-name="layer1" stroke-linejoin="round"></path>
                             </svg>
                         </a>
-                        <span>{{this.tags.name}}’s informations</span>
+                        <span>{{this.mangas.title}}’s informations</span>
                     </h2>
                     <div class="pb-2 flex items-center justify-between text-gray-600 dark:text-gray-400 border-b dark:border-gray-600">
                         <div class="flex ">
                             <span class="pr-5">
                                 created
                                 <span class="text-red-500 dark:text-red-200">
-                                    {{configDateTime(this.tags.created_at)}}
+                                    {{configDateTime(this.mangas.created_at)}}
                                 </span>
                             </span>
                             <span class="pr-5">
                                 last update
                                 <span class="text-red-500 dark:text-red-200">
-                                    {{configDateTime(this.tags.updated_at)}}
+                                    {{configDateTime(this.mangas.updated_at)}}
                                 </span>
                             </span>
                         </div>
@@ -48,18 +48,18 @@
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
                                     <div class="col-span-4 sm:col-span-4">
-                                        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                                        <p>{{this.tags.name}}</p>
+                                        <label for="name" class="block text-sm font-medium text-gray-700">Title</label>
+                                        <p>{{this.mangas.title}}</p>
                                     </div>
                                     <div class="col-span-4 sm:col-span-4">
                                         <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
-                                        <p>{{this.tags.slug}}</p>
+                                        <p>{{this.mangas.slug}}</p>
                                     </div>
                                     <div class="col-span-2 sm:col-span-2">
                                     </div>
                                     <div class="col-span-1 sm:col-span-1">
                                         <label for="isMature" class="flex flex-row content-center text-sm font-medium text-gray-700 inline row">
-                                            <input type="checkbox" disabled v-model="this.tags.isMature" true-value=1 false-value=0 name="isMature" id="isMature" class=" mr-2 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
+                                            <input type="checkbox" disabled v-model="this.mangas.isMature" true-value=1 false-value=0 name="isMature" id="isMature" class=" mr-2 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <p>Mature content</p>
                                         </label>
                                     </div>
@@ -73,11 +73,11 @@
     </admin-layout>
     <jet-dialog-modal :show="this.ConfirmDeletion" @close="this.ConfirmDeletion = false">
         <template #title>
-            Delete Tag
+            Delete User
         </template>
 
         <template #content>
-            Are you sure you want to delete tag {{this.tags.name}}? Once it is deleted, all of its resources and data will be permanently deleted.
+            Are you sure you want to delete user {{this.user.username}}? Once it is deleted, all of its resources and data will be permanently deleted.
         </template>
 
         <template #footer>
@@ -85,8 +85,8 @@
                 Nevermind
             </jet-secondary-button>
 
-            <jet-danger-button class="ml-2" @click="deleteTag" :class="{ 'opacity-25': delTag.processing }" :disabled="delTag.processing">
-                Delete Tag
+            <jet-danger-button class="ml-2" @click="deleteUser" :class="{ 'opacity-25': delTag.processing }" :disabled="delTag.processing">
+                Delete User
             </jet-danger-button>
         </template>
     </jet-dialog-modal>
@@ -106,7 +106,7 @@
             JetDangerButton
         },
 
-        props: ['tags'],
+        props: ['mangas'],
 
         data () {
             return {
@@ -129,13 +129,13 @@
                 return moment(date).locale("en").format("MMM Do YYYY");
             },
             Edit(){
-                this.$inertia.visit(route('admin.tags.edit', {id: this.tags.id}))
+                this.$inertia.visit(route('admin.mangas.edit', {id: this.mangas.id}))
             },
             Delete(){
                 this.ConfirmDeletion = true
             },
-            deleteTag(){
-                this.delTag.post(route('admin.tags.destroy', {id: this.tags.id}), {
+            deleteUser(){
+                this.delTag.post(route('admin.mangas.destroy', {id: this.mangas.id}), {
                     preserveScroll: true
                 })
             },

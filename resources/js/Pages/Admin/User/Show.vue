@@ -10,20 +10,20 @@
                                 <path d="M16 34L3 46l13 12" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke="#202020" fill="none" data-name="layer1" stroke-linejoin="round"></path>
                             </svg>
                         </a>
-                        <span>{{this.user.username}}’s informations</span>
+                        <span>{{this.users.username}}’s informations</span>
                     </h2>
                     <div class="pb-2 flex items-center justify-between text-gray-600 dark:text-gray-400 border-b dark:border-gray-600">
                         <div class="flex ">
                             <span class="pr-5">
                                 created
                                 <span class="text-red-500 dark:text-red-200">
-                                    {{configDateTime(this.user.created_at)}}
+                                    {{configDateTime(this.users.created_at)}}
                                 </span>
                             </span>
                             <span class="pr-5">
                                 last update
                                 <span class="text-red-500 dark:text-red-200">
-                                    {{configDateTime(this.user.updated_at)}}
+                                    {{configDateTime(this.users.updated_at)}}
                                 </span>
                             </span>
                         </div>
@@ -47,36 +47,36 @@
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
-                                    <div v-if="this.user.first_name" class="col-span-6 sm:col-span-3">
+                                    <div v-if="this.users.first_name" class="col-span-6 sm:col-span-3">
                                         <label for="first_name" class="block text-sm font-medium text-gray-700">First name</label>
-                                        <p>{{this.user.first_name}}</p>
+                                        <p>{{this.users.first_name}}</p>
                                     </div>
 
-                                    <div v-if="this.user.last_name" class="col-span-6 sm:col-span-3">
+                                    <div v-if="this.users.last_name" class="col-span-6 sm:col-span-3">
                                         <label for="last_name" class="block text-sm font-medium text-gray-700">Last name</label>
-                                        <p>{{this.user.last_name}}</p>
+                                        <p>{{this.users.last_name}}</p>
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
                                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                                        <p>{{this.user.username}}</p>
+                                        <p>{{this.users.username}}</p>
                                     </div>
 
-                                    <div v-if="this.user.birthday" class="col-span-6 sm:col-span-2">
+                                    <div v-if="this.users.birthday" class="col-span-6 sm:col-span-2">
                                         <label for="birthday" class="block text-sm font-medium text-gray-700">Birthday</label>
-                                        <p>{{configDateTime(this.user.birthday)}}</p>
+                                        <p>{{configDateTime(this.users.birthday)}}</p>
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-4">
                                         <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                                        <p>{{this.user.email}}</p>
+                                        <p>{{this.users.email}}</p>
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-4">
                                         <label for="roles" class="block text-sm font-medium text-gray-700">Roles</label>
                                         <div class="flex flex-row">
-                                            <p v-for="(role, index) in this.user.roles" v-bind:key="role.id">
-                                                <span v-if="index < this.user.roles.length && index != 0">,</span>
+                                            <p v-for="(role, index) in this.users.roles" v-bind:key="role.id">
+                                                <span v-if="index < this.users.roles.length && index != 0">,</span>
                                                 {{role.name}}
                                             </p>
                                         </div>
@@ -95,7 +95,7 @@
         </template>
 
         <template #content>
-            Are you sure you want to delete user {{this.user.username}}? Once it is deleted, all of its resources and data will be permanently deleted.
+            Are you sure you want to delete users {{this.users.username}}? Once it is deleted, all of its resources and data will be permanently deleted.
         </template>
 
         <template #footer>
@@ -124,7 +124,7 @@
             JetDangerButton
         },
 
-        props: ['user'],
+        props: ['users'],
 
         data () {
             return {
@@ -147,16 +147,19 @@
                 return moment(date).locale("en").format("MMM Do YYYY");
             },
             Edit(){
-                this.$inertia.visit(route('admin.users.edit', {id: this.user.id}))
+                this.$inertia.visit(route('admin.users.edit', {id: this.users.id}))
             },
             Delete(){
                 this.ConfirmDeletion = true
             },
             deleteUser(){
-                this.delUser.post(route('admin.users.destroy', {id: this.user.id}), {
+                this.delUser.post(route('admin.users.destroy', {id: this.users.id}), {
                     preserveScroll: true
                 })
             },
+        },
+        beforeMount(){
+            //console.log(this.users);
         },
     }
 </script>
