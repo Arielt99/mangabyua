@@ -1,5 +1,5 @@
 <template>
-    <admin-layout>
+    <mangaka-layout>
         <div class="h-screen w-full flex overflow-hidden">
             <main class="flex-1 flex flex-col bg-gray-100 dark:bg-gray-700 transition duration-500 ease-in-out overflow-y-auto">
                 <div class="mx-10 my-2">
@@ -93,7 +93,7 @@
                 </div>
             </main>
         </div>
-    </admin-layout>
+    </mangaka-layout>
     <jet-dialog-modal :show="this.ConfirmDeletion" @close="this.ConfirmDeletion = false">
         <template #title>
             Delete User
@@ -115,7 +115,7 @@
     </jet-dialog-modal>
 </template>
 <script>
-    import AdminLayout from '@/Layouts/AdminLayout'
+    import MangakaLayout from '@/Layouts/MangakaLayout'
     import JetDialogModal from './../../../Jetstream/DialogModal'
     import JetDangerButton from './../../../Jetstream/DangerButton'
     import JetSecondaryButton from './../../../Jetstream/SecondaryButton'
@@ -123,7 +123,7 @@
 
     export default {
         components: {
-            AdminLayout,
+            MangakaLayout,
             JetDialogModal,
             JetSecondaryButton,
             JetDangerButton

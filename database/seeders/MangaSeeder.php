@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Manga;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +33,11 @@ class MangaSeeder extends Seeder
             //add the mangakas
             foreach($obj->authors as $author){
                 $manga->mangakas()->attach(User::whereRoleIsMangaka()->whereFullNameIs($author)->get()->pluck('id'));
+            }
+
+            //add the tags
+            foreach($obj->tags as $tag){
+                $manga->tags()->attach(Tag::where("name", $tag)->get()->pluck('id'));
             }
 
         }

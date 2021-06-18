@@ -1,5 +1,5 @@
 <template>
-    <admin-layout>
+    <mangaka-layout>
         <div class="h-screen w-full flex overflow-hidden">
             <main class="flex-1 flex flex-col bg-gray-100 dark:bg-gray-700 transition duration-500 ease-in-out overflow-y-auto">
                 <div class="mx-10 my-2">
@@ -23,7 +23,7 @@
                             </span>
                         </div>
                         <div>
-                            <input type="search" v-model="search" placeholder="Search a tag.." class="inline-flex items-center px-3 py-2 my-2 mx-1 rounded-md font-semibold text-xs"/>
+                            <input type="search" v-model="search" placeholder="Search a manga.." class="inline-flex items-center px-3 py-2 my-2 mx-1 rounded-md font-semibold text-xs"/>
                             <button id="add" @click="Add" class="inline-flex items-center px-3 py-2 my-2 mx-1 ml-10 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">Create a Manga</button>
                         </div>
                     </div>
@@ -48,71 +48,71 @@
                 </div>
 	        </main>
         </div>
-    </admin-layout>
+    </mangaka-layout>
 </template>
 
 <script>
-import AdminLayout from '@/Layouts/MangakaLayout'
-import MangaCard from '@/Components/Mangaka/MangaCard'
+    import MangakaLayout from '@/Layouts/MangakaLayout'
+    import MangaCard from '@/Components/Mangaka/MangaCard'
 
-export default {
-    components: {
-        AdminLayout,MangaCard
-    },
-
-    props: ['mangas'],
-
-    data() {
-        return {
-            sort:null,
-            search:''
-        };
-    },
-
-    methods: {
-        Add(){
-            //this.$inertia.visit(route('admin.mangas.create'))
+    export default {
+        components: {
+            MangakaLayout,MangaCard
         },
-        Sort(parameter){
-            switch (parameter) {
-                case 'asc.id':
-                        this.MangaList.sort(function(a, b) {
-                            return a.id - b.id;
-                        });
-                        this.sort = parameter
-                    break;
-                case 'desc.id':
-                        this.MangaList.sort(function(a, b) {
-                            return a.id - b.id;
-                        }).reverse();
-                        this.sort = parameter
-                    break;
-                default:
-                    this.sort = null
-                    console.log(`Sorry, we are out of ${parameter}.`);
-            }
-        }
-    },
 
-    computed:{
-        MangaList() {
-            var results = [];
-            for(var i=0; i<this.mangas.length; i++) {
-                var matching = false;
-                for(var key in this.mangas[i]) {
-                    if(key=="name"||key=="slug"){
-                        if(this.mangas[i][key].indexOf(this.search.toLowerCase())!=-1) {
-                            matching = true;
+        props: ['mangas'],
+
+        data() {
+            return {
+                sort:null,
+                search:''
+            };
+        },
+
+        methods: {
+            Add(){
+                //this.$inertia.visit(route('admin.mangas.create'))
+            },
+            Sort(parameter){
+                switch (parameter) {
+                    case 'asc.id':
+                            this.MangaList.sort(function(a, b) {
+                                return a.id - b.id;
+                            });
+                            this.sort = parameter
+                        break;
+                    case 'desc.id':
+                            this.MangaList.sort(function(a, b) {
+                                return a.id - b.id;
+                            }).reverse();
+                            this.sort = parameter
+                        break;
+                    default:
+                        this.sort = null
+                        console.log(`Sorry, we are out of ${parameter}.`);
+                }
+            }
+        },
+
+        computed:{
+            MangaList() {
+                var results = [];
+                for(var i=0; i<this.mangas.length; i++) {
+                    var matching = false;
+                    for(var key in this.mangas[i]) {
+                        if(key=="name"||key=="slug"){
+                            if(this.mangas[i][key].indexOf(this.search.toLowerCase())!=-1) {
+                                matching = true;
+                            }
                         }
                     }
+                    if(matching == true){
+                        results.push(this.mangas[i]);
+                    }
                 }
-                if(matching == true){
-                    results.push(this.mangas[i]);
-                }
-            }
-            return results;
+                return results;
+            },
         },
-    },
-}
+    }
 </script>
 
