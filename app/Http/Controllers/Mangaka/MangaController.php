@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Mangaka;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Mangaka\MangaFormRequest;
 use App\Models\Manga;
-use Illuminate\Http\Request;
+use App\Models\Tag;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 class MangaController extends Controller
 {
@@ -38,7 +42,17 @@ class MangaController extends Controller
      */
     public function create()
     {
-        //
+        $mangakas = User::query()
+                    ->whereRoleIsMangaka()
+                    ->get();
+
+        $tags = Tag::query()
+                    ->get();
+
+        return Inertia::render('Mangaka/Manga/Form', [
+            'mangakas' => $mangakas,
+            'tags' => $tags,
+        ]);
     }
 
     /**
@@ -47,9 +61,19 @@ class MangaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MangaFormRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $validated = array_merge($validated, ['slug'=>Str::slug($request->title)]);
+
+        $mangas = Manga::create($validated);
+
+        $mangas->tags()->sync($request->tags);
+
+        $mangas->mangakas()->sync($request->mangakas);
+
+        return redirect()->route('mangaka.mangas.index');
     }
 
     /**
@@ -65,7 +89,8 @@ class MangaController extends Controller
         ->with('tags')
         ->whereHas('mangakas', function ($query) {
             return $query->where('mangaka_id', Auth::user()->id);
-        })->find($id);
+        })
+        ->find($id);
 
         if(!$mangas){
             return back();
@@ -84,7 +109,31 @@ class MangaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mangas = collect(Manga::query()
+        ->whereHas('mangakas', function ($query) {
+            return $query->where('mangaka_id', Auth::user()->id);
+        })
+        ->find($id));
+
+        if(!$mangas){
+            return back();
+        }
+
+        $mangas->put('tags', array_values(Manga::query()->findOrFail($id)->tags->pluck('id')->toArray()));
+        $mangas->put('mangakas', array_values(Manga::query()->findOrFail($id)->mangakas->pluck('id')->toArray()));
+
+        $mangakas = User::query()
+        ->whereRoleIsMangaka()
+        ->get();
+
+        $tags = Tag::query()
+                ->get();
+
+        return Inertia::render('Mangaka/Manga/Form', [
+        'mangakas' => $mangakas,
+        'tags' => $tags,
+        'mangas' => $mangas
+        ]);
     }
 
     /**
@@ -94,9 +143,27 @@ class MangaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(MangaFormRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $validated = array_merge($validated, ['slug'=>Str::slug($request->title)]);
+
+        $mangas = Manga::query()
+        ->whereHas('mangakas', function ($query) {
+            return $query->where('mangaka_id', Auth::user()->id);
+        })
+        ->findOrFail($id);
+
+        $mangas->update($validated);
+
+        $mangas->tags()->sync($request->tags);
+
+        $mangas->mangakas()->sync($request->mangakas);
+
+        return $request->wantsJson()
+        ? new JsonResponse('', 200)
+        : back()->with('status', 'Manga updated');
     }
 
     /**

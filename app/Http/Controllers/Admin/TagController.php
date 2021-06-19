@@ -115,7 +115,7 @@ class TagController extends Controller
 
         return $request->wantsJson()
         ? new JsonResponse('', 200)
-        : back()->with('status', 'User updated')->with('tags', $tags);
+        : back()->with('status', 'Tag updated')->with('tags', $tags);
     }
 
     /**

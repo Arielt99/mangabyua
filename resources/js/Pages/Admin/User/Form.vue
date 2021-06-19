@@ -118,7 +118,6 @@ export default {
     },
     data () {
         return {
-        value: [],
         formUser: this.$inertia.form({
                 first_name: this.users.first_name,
                 last_name: this.users.last_name,

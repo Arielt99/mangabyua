@@ -46,11 +46,11 @@
     </div>
     <jet-dialog-modal :show="this.ConfirmDeletion" @close="this.ConfirmDeletion = false">
         <template #title>
-            Delete Tag
+            Delete Manga
         </template>
 
         <template #content>
-            Are you sure you want to delete the manga {{this.manga.name}}? Once it is deleted, all of its resources and data will be permanently deleted.
+            Are you sure you want to delete {{this.manga.name}}? Once it is deleted, all of its resources and data will be permanently deleted.
         </template>
 
         <template #footer>

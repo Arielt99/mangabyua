@@ -78,6 +78,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                                        <p>{{this.mangas.description}}</p>
+                                    </div>
                                     <div class="col-span-2 sm:col-span-2">
                                     </div>
                                     <div class="col-span-1 sm:col-span-1">
@@ -96,11 +100,11 @@
     </mangaka-layout>
     <jet-dialog-modal :show="this.ConfirmDeletion" @close="this.ConfirmDeletion = false">
         <template #title>
-            Delete User
+            Delete Manga
         </template>
 
         <template #content>
-            Are you sure you want to delete user {{this.user.username}}? Once it is deleted, all of its resources and data will be permanently deleted.
+            Are you sure you want to delete {{this.mangas.title}}? Once it is deleted, all of its resources and data will be permanently deleted.
         </template>
 
         <template #footer>
@@ -108,8 +112,8 @@
                 Nevermind
             </jet-secondary-button>
 
-            <jet-danger-button class="ml-2" @click="deleteUser" :class="{ 'opacity-25': delTag.processing }" :disabled="delTag.processing">
-                Delete User
+            <jet-danger-button class="ml-2" @click="deleteManga" :class="{ 'opacity-25': delManga.processing }" :disabled="delManga.processing">
+                Delete Manga
             </jet-danger-button>
         </template>
     </jet-dialog-modal>
@@ -135,10 +139,10 @@
             return {
                 ConfirmDeletion:false,
 
-                delTag: this.$inertia.form({
+                delManga: this.$inertia.form({
                     '_method': 'DELETE',
                 },{
-                    bag: 'deleteTag'
+                    bag: 'deleteManga'
                 })
             }
         },
@@ -152,19 +156,19 @@
                 return moment(date).locale("en").format("MMM Do YYYY");
             },
             Edit(){
-                this.$inertia.visit(route('admin.mangas.edit', {id: this.mangas.id}))
+                this.$inertia.visit(route('mangaka.mangas.edit', {id: this.mangas.id}))
             },
             Delete(){
                 this.ConfirmDeletion = true
             },
-            deleteUser(){
-                this.delTag.post(route('admin.mangas.destroy', {id: this.mangas.id}), {
+            deleteManga(){
+                this.delManga.post(route('mangaka.mangas.destroy', {id: this.mangas.id}), {
                     preserveScroll: true
                 })
             },
         },
         beforeMount(){
-        console.log(this.mangas);
+        //console.log(this.mangas);
         },
     }
 </script>

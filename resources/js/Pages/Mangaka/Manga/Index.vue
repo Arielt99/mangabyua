@@ -71,7 +71,7 @@
 
         methods: {
             Add(){
-                //this.$inertia.visit(route('admin.mangas.create'))
+                this.$inertia.visit(route('mangaka.mangas.create'))
             },
             Sort(parameter){
                 switch (parameter) {

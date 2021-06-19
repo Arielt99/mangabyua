@@ -74,7 +74,7 @@ export default {
                 return {
                     name: '',
                     slug: '',
-                    isMature: false,
+                    isMature: 0,
                 }
             },
         },

@@ -160,11 +160,14 @@ class dev_environment extends Command
                 $manga = Manga::factory()
                     ->create();
 
-                //$manga->mangakas()->sync($mangakas->random(rand(1,2))->pluck('id'));
-
                 $manga->mangakas()->sync($mangakas->random(rand(1,2))->pluck('id'));
 
                 $manga->tags()->sync($tags->random(rand(1,5))->pluck('id'));
+
+                if($manga->tags()->where('isMature', true)->exists()){
+                    $manga->isMature = true;
+                    $manga->save();
+                }
 
                 $bar->advance();
             }

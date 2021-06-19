@@ -29,7 +29,7 @@ class MangaFactory extends Factory
             'title' => $title,
             'slug' => Str::slug($title),
             'description' => $this->faker->realText(500),
-            'isMature' => $this->faker->boolean(),
+            'isMature' => 0,
         ];
     }
 }

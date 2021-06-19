@@ -40,6 +40,11 @@ class MangaSeeder extends Seeder
                 $manga->tags()->attach(Tag::where("name", $tag)->get()->pluck('id'));
             }
 
+            if($manga->tags()->where('isMature', true)->exists()){
+                $manga->isMature = true;
+                $manga->save();
+            }
+
         }
     }
 }
