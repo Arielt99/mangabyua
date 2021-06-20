@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Image;
 use App\Models\Manga;
 use App\Models\Tag;
 use App\Models\User;
@@ -40,6 +41,16 @@ class MangaSeeder extends Seeder
                 $manga->tags()->attach(Tag::where("name", $tag)->get()->pluck('id'));
             }
 
+            $uploadedFileUrl = cloudinary()->upload('database/data/covers/'.$obj->cover)->getSecurePath();
+
+            $cover = new Image();
+            $cover->url = $uploadedFileUrl;
+            $cover->save();
+
+            $manga->medias()->delete();
+
+            $manga->medias()->sync($cover);
+
             if($manga->tags()->where('isMature', true)->exists()){
                 $manga->isMature = true;
                 $manga->save();
@@ -48,3 +59,5 @@ class MangaSeeder extends Seeder
         }
     }
 }
+
+
