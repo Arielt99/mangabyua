@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mangaka;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Mangaka\MangaFormRequest;
+use App\Models\Image;
 use App\Models\Manga;
 use App\Models\Tag;
 use App\Models\User;
@@ -11,6 +12,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use CloudinaryLabs\CloudinaryLaravel\Model\Media;
 
 class MangaController extends Controller
 {
@@ -66,8 +69,20 @@ class MangaController extends Controller
         $validated = $request->validated();
 
         $validated = array_merge($validated, ['slug'=>Str::slug($request->title)]);
+        unset($validated['cover']);
 
+
+        //media creation
+        $uploadedFileUrl = cloudinary()->upload($request->file('cover')->getRealPath())->getSecurePath();
+
+        $cover = new Image;
+        $cover->url = $uploadedFileUrl;
+        $cover->save();
+
+        //manga creation
         $mangas = Manga::create($validated);
+
+        $mangas->medias()->save($cover);
 
         $mangas->tags()->sync($request->tags);
 
@@ -87,6 +102,7 @@ class MangaController extends Controller
         $mangas = Manga::query()
         ->with('mangakas')
         ->with('tags')
+        ->with('medias')
         ->whereHas('mangakas', function ($query) {
             return $query->where('mangaka_id', Auth::user()->id);
         })
@@ -110,6 +126,7 @@ class MangaController extends Controller
     public function edit($id)
     {
         $mangas = collect(Manga::query()
+        ->with('medias')
         ->whereHas('mangakas', function ($query) {
             return $query->where('mangaka_id', Auth::user()->id);
         })
@@ -148,7 +165,17 @@ class MangaController extends Controller
         $validated = $request->validated();
 
         $validated = array_merge($validated, ['slug'=>Str::slug($request->title)]);
+        unset($validated['cover']);
 
+
+        //media creation
+        $uploadedFileUrl = cloudinary()->upload($request->file('cover')->getRealPath())->getSecurePath();
+
+        $cover = new Image;
+        $cover->url = $uploadedFileUrl;
+        $cover->save();
+
+        //manga update
         $mangas = Manga::query()
         ->whereHas('mangakas', function ($query) {
             return $query->where('mangaka_id', Auth::user()->id);
@@ -156,6 +183,10 @@ class MangaController extends Controller
         ->findOrFail($id);
 
         $mangas->update($validated);
+
+        $mangas->medias()->delete();
+
+        $mangas->medias()->sync($cover);
 
         $mangas->tags()->sync($request->tags);
 

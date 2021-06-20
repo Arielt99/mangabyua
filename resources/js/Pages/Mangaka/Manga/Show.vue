@@ -47,12 +47,18 @@
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
-                                    <div class="col-span-3 sm:col-span-3">
+                                    <div class="col-span-4 row-span-6 sm:col-span-2">
+                                        <label for="cover" class="block text-sm font-medium text-gray-700">Cover</label>
+                                        <div class="block mx-auto mt-1 h-96 rounded-lg">
+                                            <img :src="this.mangas.medias[0] ? this.mangas.medias[0].url : '/img/imgPlaceholder.png' " class="object-cover bg-gray-200 mx-auto h-96 w-2/3" >
+                                        </div>
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-3">
                                         <label for="name" class="block text-sm font-medium text-gray-700">Title</label>
                                         <p>{{this.mangas.title}}</p>
                                     </div>
 
-                                    <div class="col-span-3 sm:col-span-3">
+                                    <div class="col-span-4 sm:col-span-3">
                                         <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
                                         <p>{{this.mangas.slug}}</p>
                                     </div>
@@ -78,17 +84,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-span-4 sm:col-span-4">
-                                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                                        <p>{{this.mangas.description}}</p>
-                                    </div>
-                                    <div class="col-span-2 sm:col-span-2">
-                                    </div>
                                     <div class="col-span-1 sm:col-span-1">
                                         <label for="isMature" class="flex flex-row content-center text-sm font-medium text-gray-700 inline row">
                                             <input type="checkbox" disabled v-model="this.mangas.isMature" true-value=1 false-value=0 name="isMature" id="isMature" class=" mr-2 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <p>Mature content</p>
                                         </label>
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                                        <p>{{this.mangas.description}}</p>
                                     </div>
                                 </div>
                             </div>

@@ -18,7 +18,23 @@
                             <div class="shadow overflow-hidden sm:rounded-md">
                                 <div class="px-4 py-5 bg-white sm:p-6">
                                     <div class="grid grid-cols-6 gap-6">
-                                        <div class="col-span-3 sm:col-span-3">
+                                        <div class="col-span-4 row-span-6 sm:col-span-2">
+                                            <label for="cover" class="block text-sm font-medium text-gray-700">Cover</label>
+                                            <div class="block mx-auto mt-1 h-96 rounded-lg">
+                                                <img :src="this.formManga.cover ? toBlob(this.formManga.cover) : '/img/imgPlaceholder.png' " class="object-cover bg-gray-200 mx-auto h-96 w-2/3" >
+                                            </div>
+                                            <div class="flex mt-1 w-full items-center justify-center bg-grey-lighter">
+                                                <label class="w-full flex flex-col items-center px-4 py-3 bg-white text-gray-500 rounded-lg tracking-wide uppercase border border-gray-300 cursor-pointer hover:text-gray-300" v-bind:class="{ error: this.formManga.errors.cover}">
+                                                    <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                                                    </svg>
+                                                    <span class="mt-1 text-base leading-normal">Select a file</span>
+                                                    <input type='file' accept="image/png, image/jpeg" class="hidden" @change="onFileChange" name="cover" id="cover"/>
+                                                </label>
+                                            </div>
+                                            <jet-input-error :message="this.formManga.errors.cover" class="mt-2" />
+                                        </div>
+                                        <div class="col-span-4 sm:col-span-4">
                                             <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
                                             <input type="text" v-model="this.formManga.title" v-bind:class="{ error: this.formManga.errors.title}" name="title" id="title" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                             <jet-input-error :message="this.formManga.errors.title" class="mt-2" />
@@ -35,19 +51,17 @@
                                             <multiselect v-model="this.formManga.tags" v-bind:class="{ error: this.formManga.errors.tags}" @change="tagSelect" name="tags" mode="tags" :options="this.tags" valueProp="id" :searchable="true" trackBy="name" label="name" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                                             <jet-input-error :message="this.formManga.errors.tags" class="mt-2" />
                                         </div>
-                                        <div class="col-span-4 sm:col-span-4">
-                                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                                            <textarea v-model="this.formManga.description" v-bind:class="{ error: this.formManga.errors.description}" name="description" id="description" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
-                                            <jet-input-error :message="this.formManga.errors.description" class="mt-2" />
-                                        </div>
-                                        <div class="col-span-2 sm:col-span-2">
-                                        </div>
                                         <div class="col-span-1 sm:col-span-1">
                                             <label for="isMature" class="flex flex-row content-center text-sm font-medium text-gray-700 inline row">
                                                 <input type="checkbox" v-model="this.formManga.isMature" @change="canBeUncheck" true-value=1 false-value=0 v-bind:class="{ error: this.formManga.errors.isMature}" name="isMature" id="isMature" class=" mr-2 focus:ring-indigo-500 focus:border-indigo-500 block shadow-sm sm:text-sm border-gray-300 rounded-md">
                                                 <p>Mature content</p>
                                             </label>
                                             <jet-input-error :message="this.formManga.errors.isMature" class="mt-2" />
+                                        </div>
+                                        <div class="col-span-4 sm:col-span-4">
+                                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                                            <textarea v-model="this.formManga.description" v-bind:class="{ error: this.formManga.errors.description}" name="description" id="description" class="mt-1 h-44 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"></textarea>
+                                            <jet-input-error :message="this.formManga.errors.description" class="mt-2" />
                                         </div>
                                     </div>
                                 </div>
@@ -89,6 +103,7 @@ export default {
                     tags: [],
                     description: '',
                     isMature: 0,
+                    medias:[]
                 }
             },
         },
@@ -108,7 +123,8 @@ export default {
                 mangakas: this.mangas.mangakas,
                 tags: this.mangas.tags,
                 description: this.mangas.description,
-                isMature: this.mangas.isMature
+                isMature: this.mangas.isMature,
+                cover: this.mangas.medias[0] ? this.mangas.medias[0].url : null
             })
         }
     },
@@ -132,7 +148,7 @@ export default {
                 })
             }
             else if(this.route().current('mangaka.mangas.edit')){
-                this.formManga.put(this.route('mangaka.mangas.update', {id: this.mangas.id}), {
+                this.formManga.post(this.route('mangaka.mangas.update', {manga: this.mangas.id}), {
                     preserveScroll: true,
                     onError: () => {
                     },
@@ -140,6 +156,31 @@ export default {
                     }
                 })
             }
+        },
+        onFileChange(fileInput) {
+            if(fileInput.target.files[0]){
+                this.formManga.cover = fileInput.target.files[0];
+            }
+            else if(this.mangas.medias[0]){
+                this.formManga.cover = this.mangas.medias[0].url
+            }
+            else{
+                this.formManga.cover = null
+            }
+        },
+        toBlob(img){
+            if(this.mangas.medias[0]){
+                if(img != this.mangas.medias[0].url){
+                    return URL.createObjectURL(img)
+                }
+                else{
+                    return this.mangas.medias[0].url
+                }
+            }
+            else {
+                return URL.createObjectURL(img)
+            }
+
         },
         //don't allow the current mangaka to not be in the mangaka list of the manga
         mangakaSelect(value){

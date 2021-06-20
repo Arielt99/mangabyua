@@ -76,7 +76,15 @@ Route::group(['prefix' => 'mangaka', 'as' => 'mangaka.'], function () {
         /**
          * Manage the mangas.
          */
-        Route::resource('mangas', MangaController::class);
+        Route::get('/mangas', [MangaController::class, 'index'])->name('mangas.index');
+        Route::get('/mangas/create', [MangaController::class, 'create'])->name('mangas.create');
+        Route::post('/mangas', [MangaController::class, 'store'])->name('mangas.store');
+
+        Route::get('/mangas/{manga}', [MangaController::class, 'show'])->name('mangas.show');
+        Route::get('/mangas/{manga}/edit', [MangaController::class, 'edit'])->name('mangas.edit');
+        Route::post('/mangas/{manga}', [MangaController::class, 'update'])->name('mangas.update');
+        Route::delete('/mangas/{manga}', [MangaController::class, 'destroy'])->name('mangas.destroy');
+
     });
 
 });

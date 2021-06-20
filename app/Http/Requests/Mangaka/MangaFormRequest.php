@@ -40,13 +40,16 @@ class MangaFormRequest extends FormRequest
         //is mature boolean must be true if any of the tag is mature content
         $isMatureMustBeTrue = null;
 
-        foreach ($this->input('tags') as $tag => $id) {
-            if(Tag::findOrFail($id)->isMature == 1){
-                $isMatureMustBeTrue = 'in:1';
-            }
-        }
+        //can't use it because it's a form data now that the cover is send
+        // foreach ($this->input('tags') as $tag => $id) {
+        //     if(Tag::findOrFail($id)->isMature == 1){
+        //         $isMatureMustBeTrue = 'in:1';
+        //     }
+        // }
+
         return [
             'title' => ['required','string',$uniqueRule,'max:255'],
+            'cover' => ['required', 'image'],
             'mangakas' => ['required','array','min:1'],
             'mangakas.*' => ['required', $currentMangaka],
             'tags' => ['required','array','min:1'],
