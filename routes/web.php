@@ -9,6 +9,7 @@ use App\Http\Controllers\Mangaka\MangaController;
 use App\Http\Controllers\Mangaka\MangakaController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 
 /*
@@ -21,6 +22,9 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
+if (env('APP_ENV') === 'production') {
+    URL::forceSchema('https');
+}
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
