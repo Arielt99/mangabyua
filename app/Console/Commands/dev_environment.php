@@ -7,7 +7,6 @@ use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use MangakaManga;
 use Spatie\Permission\Models\Role;
 
 class dev_environment extends Command
@@ -43,8 +42,22 @@ class dev_environment extends Command
      */
     public function handle()
     {
+        $asciiLogo = "
+        ___  ___                        _
+        |  \/  |                       | |
+        | .  . | __ _ _ __   __ _  __ _| |__  _   _ _   _  __ _
+        | |\/| |/ _` | '_ \ / _` |/ _` | '_ \| | | | | | |/ _` |
+        | |  | | (_| | | | | (_| | (_| | |_) | |_| | |_| | (_| |
+        \_|  |_/\__,_|_| |_|\__, |\__,_|_.__/ \__, |\__,_|\__,_|
+                             __/ |             __/ |
+                            |___/             |___/             
+        ";
+
         $start = microtime(true);
-        $this->info("\033[36m DEV ENVIRONMENT CREATION");
+
+        $this->info("\033[0;91m ".$asciiLogo);
+
+        $this->info("\033[1;36m DEV ENVIRONMENT CREATION");
 
         //default values
         $nbMangaka = $this->argument('Mangakas');
@@ -53,7 +66,7 @@ class dev_environment extends Command
         $nbManga = $this->argument('Mangas');
 
         //migrate
-        $this->info("\033[33m Starting migrating...");
+        $this->info("\033[0;33m Starting migrating...");
         Artisan::call('migrate:fresh');
         $this->info("\033[32m Default migration done \xE2\x9C\x94");
 
