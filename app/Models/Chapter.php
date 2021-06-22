@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model
+class Chapter extends Model
 {
     use HasFactory;
 
@@ -15,23 +15,24 @@ class Image extends Model
      * @var array
      */
     protected $fillable = [
+        'number',
         'title',
+        'manga_id',
     ];
 
-
     /**
-     * Get all of the manga that are assigned this media.
+     * Get all of the medias for the chapter.
      */
-    public function mangas()
+    public function medias()
     {
-        return $this->morphedByMany(Manga::class, 'medias');
+        return $this->morphToMany(Image::class, 'medias');
     }
 
     /**
-     * Get all of the manga that are assigned this media.
+     * Get the manga that owns the chapter.
      */
-    public function chapters()
+    public function mangas()
     {
-        return $this->morphedByMany(Chapter::class, 'medias');
+        return $this->belongsTo(Manga::class);
     }
 }

@@ -41,10 +41,18 @@ class Manga extends Model
     }
 
     /**
-     * Get all of the madias for the post.
+     * Get all of the medias for the manga.
      */
     public function medias()
     {
         return $this->morphToMany(Image::class, 'medias');
+    }
+
+    /**
+     * Get the comments for the blog post.
+     */
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
     }
 }

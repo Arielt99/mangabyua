@@ -30,8 +30,6 @@ class UserFactory extends Factory
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'cgu_at' => now(),
-            'cgv_at' => now(),
             'password' => Hash::make("Password1234"), // password
             'remember_token' => Str::random(10),
             'birthday' => Carbon::parse($this->faker->dateTimeBetween('1970-01-01', '2000-12-31'))

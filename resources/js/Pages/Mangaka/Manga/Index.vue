@@ -27,8 +27,8 @@
                             <button id="add" @click="Add" class="inline-flex items-center px-3 py-2 my-2 mx-1 ml-10 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">Create a Manga</button>
                         </div>
                     </div>
-                    <div class="mt-2 grid grid-cols-3">
-                        <manga-card v-for="manga in this.MangaList" v-bind:key="manga.id" v-bind:manga="manga"/>
+                    <div class="grid grid-cols-3">
+                        <manga-card class="my-3" v-for="manga in this.MangaList" v-bind:key="manga.id" v-bind:manga="manga"/>
                     </div>
                     <p v-if="this.MangaList.length == 0" class="w-auto m-auto text-center">No manga to display</p>
                 </div>

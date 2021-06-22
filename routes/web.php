@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Mangaka\AuthController as MangakaAuthController;
+use App\Http\Controllers\Mangaka\ChapterController;
 use App\Http\Controllers\Mangaka\MangaController;
 use App\Http\Controllers\Mangaka\MangakaController;
 use Illuminate\Foundation\Application;
@@ -72,7 +73,6 @@ Route::group(['prefix' => 'mangaka', 'as' => 'mangaka.'], function () {
 
     Route::group(['middleware' => 'auth','role:Mangaka'], function () {
         Route::get('/dashboard', [MangakaController::class, 'index'])->name('dashboard');
-
         /**
          * Manage the mangas.
          */
@@ -85,6 +85,12 @@ Route::group(['prefix' => 'mangaka', 'as' => 'mangaka.'], function () {
         Route::post('/mangas/{manga}', [MangaController::class, 'update'])->name('mangas.update');
         Route::delete('/mangas/{manga}', [MangaController::class, 'destroy'])->name('mangas.destroy');
 
+        /**
+         * Manage the chapters.
+         */
+        Route::get('/chapters/{chapter}', [ChapterController::class, 'show'])->name('chapters.show');
+        Route::get('/chapters/create', [ChapterController::class, 'create'])->name('chapters.create');
+        Route::delete('/chapters/{chapter}', [ChapterController::class, 'destroy'])->name('chapters.destroy');
     });
 
 });

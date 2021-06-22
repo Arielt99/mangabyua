@@ -12,5 +12,12 @@
         "username": "Osamu-Tezuka",
         "email": "osamu.tezuka@mangabyua.com",
         "birthday" : "1928-11-03"
+    },
+    {
+        "first_name": "Hideyuki",
+        "last_name": "Yonehara",
+        "username": "Hideyuki-Yonehara",
+        "email": "hideyuki.yonehara@mangabyua.com",
+        "birthday" : "1967-10-02"
     }
 ]

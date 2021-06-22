@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Chapter;
 use App\Models\Manga;
 use App\Models\Tag;
 use App\Models\User;
@@ -9,14 +10,14 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Role;
 
-class dev_environment extends Command
+class devEnvironment extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'dev {Mangakas=0} {Readers=0} {Tags=0} {Mangas=0}';
+    protected $signature = 'dev {Mangakas=0} {Readers=0} {Tags=0} {Mangas=0} {Chapters=0}';
 
     /**
      * The console command description.
@@ -64,6 +65,18 @@ class dev_environment extends Command
         $nbReader = $this->argument('Readers');
         $nbTag = $this->argument('Tags');
         $nbManga = $this->argument('Mangas');
+        $nbChapter = $this->argument('Chapters');
+
+        //optimize
+        $this->info("\033[0;33m Starting optimization...");
+        Artisan::call('clear-compiled');
+        Artisan::call('optimize');
+        $this->info("\033[32m Optimization done \xE2\x9C\x94");
+
+        //db wipe
+        $this->info("\033[33m Starting db wipe...");
+        Artisan::call('db:wipe');
+        $this->info("\033[32m DB wipe done \xE2\x9C\x94");
 
         //migrate
         $this->info("\033[0;33m Starting migrating...");
@@ -186,6 +199,28 @@ class dev_environment extends Command
             }
             $bar->finish();
             $this->info("\n\033[32m All mangas are created \xE2\x9C\x94");
+        }
+
+        //chapters creations
+        if($nbChapter > 0){
+            $this->info("\033[33m Starting creating ".($nbChapter)." chapters...");
+            $bar = $this->output->createProgressBar($nbChapter);
+            $bar->setFormat('%bar% %percent:3s%% %current%/%max%');
+            $bar->setBarCharacter('<comment>█</comment>');
+            $bar->setEmptyBarCharacter(' ');
+            $bar->setProgressCharacter(' ');
+            $bar->start();
+
+
+            for ($i=0; $i < $nbChapter; $i++) {
+                /** @var Chapter $chapter */
+                $chapter = Chapter::factory()
+                    ->create();
+
+                $bar->advance();
+            }
+            $bar->finish();
+            $this->info("\n\033[32m All chapters are created \xE2\x9C\x94");
         }
 
         //time taken to do the action
