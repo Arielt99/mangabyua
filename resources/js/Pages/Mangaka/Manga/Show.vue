@@ -57,11 +57,6 @@
                                         <label for="name" class="block text-sm font-medium text-gray-700">Title</label>
                                         <p>{{this.mangas.title}}</p>
                                     </div>
-
-                                    <div class="col-span-4 sm:col-span-3">
-                                        <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
-                                        <p>{{this.mangas.slug}}</p>
-                                    </div>
                                     <div class="col-span-4 sm:col-span-4">
                                         <label for="mangakas" class="block text-sm font-medium text-gray-700">Authors</label>
                                         <div class="flex flex-row">

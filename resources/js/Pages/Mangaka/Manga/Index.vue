@@ -27,23 +27,9 @@
                             <button id="add" @click="Add" class="inline-flex items-center px-3 py-2 my-2 mx-1 ml-10 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">Create a Manga</button>
                         </div>
                     </div>
-                    <div class="mt-2 flex px-4 justify-between text-gray-600 dark:text-gray-400 capitalize">
-                        <!-- List sorting -->
-                        <div @click="this.sort == 'asc.id' ? Sort('desc.id') : Sort('asc.id')" class="w-20 flex items-center">
-                            <span>id</span>
-                            <svg v-if="this.sort == 'asc.id'" class="ml-1 h-5 w-5 fill-current text-red-500 dark:text-red-200" viewBox="0 0 24 24">
-                                <path d="M18 21l-4-4h3V7l2 0v10h3M 2 19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
-                            </svg>
-                            <svg v-else-if="this.sort == 'desc.id'" class="ml-1 h-5 w-5 fill-current text-red-500 dark:text-red-200" viewBox="0 0 24 24">
-                                <path d="M17 17V7h-3l4-4l4 4h-3v10h3M2 19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
-
-                            </svg>
-                            <svg v-else class="ml-1 h-5 w-5 fill-current" viewBox="0 0 24 24">
-                                <path d="M18 21l-4-4h3V7h-3l4-4 4 4h-3v10h3M2 19v-2h10v2M2 13v-2h7v2M2 7V5h4v2H2z"></path>
-                            </svg>
-                        </div>
+                    <div class="mt-2 grid grid-cols-3">
+                        <manga-card v-for="manga in this.MangaList" v-bind:key="manga.id" v-bind:manga="manga"/>
                     </div>
-                    <manga-card v-for="manga in this.MangaList" v-bind:key="manga.id" v-bind:manga="manga"/>
                     <p v-if="this.MangaList.length == 0" class="w-auto m-auto text-center">No manga to display</p>
                 </div>
 	        </main>
@@ -64,7 +50,6 @@
 
         data() {
             return {
-                sort:null,
                 search:''
             };
         },
@@ -73,25 +58,6 @@
             Add(){
                 this.$inertia.visit(route('mangaka.mangas.create'))
             },
-            Sort(parameter){
-                switch (parameter) {
-                    case 'asc.id':
-                            this.MangaList.sort(function(a, b) {
-                                return a.id - b.id;
-                            });
-                            this.sort = parameter
-                        break;
-                    case 'desc.id':
-                            this.MangaList.sort(function(a, b) {
-                                return a.id - b.id;
-                            }).reverse();
-                            this.sort = parameter
-                        break;
-                    default:
-                        this.sort = null
-                        console.log(`Sorry, we are out of ${parameter}.`);
-                }
-            }
         },
 
         computed:{

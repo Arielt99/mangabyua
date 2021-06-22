@@ -25,6 +25,7 @@ class MangaController extends Controller
     public function index()
     {
         $mangas = Manga::query()
+        ->with('medias')
         ->with('mangakas')
         ->with('tags')
         ->whereHas('mangakas', function ($query) {

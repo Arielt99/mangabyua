@@ -50,7 +50,7 @@ class dev_environment extends Command
         | |  | | (_| | | | | (_| | (_| | |_) | |_| | |_| | (_| |
         \_|  |_/\__,_|_| |_|\__, |\__,_|_.__/ \__, |\__,_|\__,_|
                              __/ |             __/ |
-                            |___/             |___/             
+                            |___/             |___/
         ";
 
         $start = microtime(true);
@@ -59,7 +59,7 @@ class dev_environment extends Command
 
         $this->info("\033[1;36m DEV ENVIRONMENT CREATION");
 
-        //default values
+        //command values
         $nbMangaka = $this->argument('Mangakas');
         $nbReader = $this->argument('Readers');
         $nbTag = $this->argument('Tags');

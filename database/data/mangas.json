@@ -10,7 +10,28 @@
         "title" : "Duranki",
         "authors" : ["Kentarō Miura"],
         "tags" : ["Action", "Adventure", "Drama", "Fantasy", "Seinen", "Supernatural"],
-        "cover" : "berserkCover.png",
+        "cover" : "durankiCover.png",
         "description" : "In the ancient world, the gods gave their wisdom to the child Usumgallu. Here, a new myth begins!!"
+    },
+    {
+        "title" : "Astro Boy",
+        "authors" : ["Osamu Tezuka"],
+        "tags" : ["Action", "Adventure", "Comedy", "Shounen", "Sci-fi", "Mecha"],
+        "cover" : "astroBoyCover.png",
+        "description" : "We proudly presents another of the crown jewels of international graphic fiction—Astro Boy! Created by the late Osamu Tezuka, a revered animator and cartoonist—who created over 150,000 pages of comics in his career!—and considered the Walt Disney of Japan, his Astro Boy was the first manga series to be adapted to animation and became a worldwide phenomenon, making Astro Boy the Mickey Mouse of anime—a jet-powered, super-strong, evil-robot-bashing, alien-invasion-smashing Mickey Mouse, that is! Exciting, whimsical, and touching, Astro Boy hearkens back to the classic era of comics and animation, featuring stories that readers young and old will enjoy."
+    },
+    {
+        "title" : "Black Jack",
+        "authors" : ["Osamu Tezuka"],
+        "tags" : ["Adventure", "Drama", "Shounen"],
+        "cover" : "blackJackCover.png",
+        "description" : "Black Jack is the doctor Tezuka wished he could be, one free of the constraints of the modern rules, who can heal and help on his rules. He travels the world helping those who pay him, sometime those he takes mercy on, and always those who move him. Despite not having a valid license, he is still the doctor of last resort, the only man who keeps the reaper at bay. Sometimes though, he's the one who brings the reaper..."
+    },
+    {
+        "title" : "Mw",
+        "authors" : ["Osamu Tezuka"],
+        "tags" : ["Action", "Drama", "Psychological", "Seinen", "Shounen ai", "Yaoi"],
+        "cover" : "MwCover.png",
+        "description" : "Garai is a Japanese Catholic Priest, who is unable to give up his lifelong sexual relationship with Yuki, a beautiful and sadistic young master criminal. Yuki's malicious crimes have become more and more extreme over the years, claiming many innocent lives, and Garai is tormented by guilt at his inability to stop them."
     }
 ]
