@@ -1,5 +1,5 @@
 <template>
-    <inertia-link :href="route('mangaka.chapters.show', {chapter: chapter.id})" class="mt-2 px-4 py-4 flex justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg">
+    <inertia-link :href="route('mangaka.chapters.show', {manga: mangas.id, chapter: chapter.id})" class="mt-2 px-4 py-4 flex justify-between bg-white dark:bg-gray-600 shadow-xl rounded-lg">
         <!-- Card -->
         <div class="w-20 flex flex-col text-gray-600 dark:text-gray-400">
             <div class="mt-2 text-black dark:text-gray-200">
@@ -24,7 +24,7 @@
     export default {
         components: {
         },
-        props: ['chapter'],
+        props: ['chapter', 'mangas'],
 
         data () {
             return {

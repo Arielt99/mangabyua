@@ -28,6 +28,9 @@
                             </span>
                         </div>
                         <div class="flex">
+                            <span @click="AddChapter()" class="cursor-pointer inline-flex items-center px-3 py-1 mx-1 ml-10 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150">
+                                Add chapter
+                            </span>
                             <span @click="Edit()" class="w-7 bg-yellow-500 text-gray-200 rounded hover:bg-yellow-400 px-1 py-1 focus:outline-none mx-1 cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-white" viewBox="0 0 64 64">
                                     <path data-name="layer1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2" d="M56 2.4l-26.1 26-4 9.7 9.7-4.1 26-26L56 2.4z" stroke-linejoin="round" stroke-linecap="round"></path>
@@ -94,7 +97,7 @@
                         </div>
                     </div>
                     <div>
-                        <chapter-card v-for="chapter in this.mangas.chapters" v-bind:key="chapter.id" v-bind:chapter="chapter"/>
+                        <chapter-card v-for="chapter in this.mangas.chapters" v-bind:key="chapter.id" v-bind:chapter="chapter" v-bind:mangas="this.mangas" />
                     </div>
                 </div>
             </main>
@@ -158,6 +161,9 @@
             //date configuration with moment.js
             configDateTime(date) {
                 return moment(date).locale("en").format("MMM Do YYYY");
+            },
+            AddChapter(){
+                this.$inertia.visit(route('mangaka.chapters.create', {manga: this.mangas.id}))
             },
             Edit(){
                 this.$inertia.visit(route('mangaka.mangas.edit', {id: this.mangas.id}))

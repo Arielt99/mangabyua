@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             MangakaSeeder::class,
             UserSeeder::class,
             MangaSeeder::class,
+            ChapterSeeder::class
         ]);
     }
 }

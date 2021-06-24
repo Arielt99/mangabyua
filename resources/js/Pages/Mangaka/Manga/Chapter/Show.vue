@@ -40,19 +40,19 @@
                         <div class="shadow overflow-hidden sm:rounded-md">
                             <div class="px-4 py-5 bg-white sm:p-6">
                                 <div class="grid grid-cols-6 gap-6">
-                                    <!-- <div class="col-span-4 row-span-6 sm:col-span-2">
-                                        <label for="cover" class="block text-sm font-medium text-gray-700">Cover</label>
-                                        <div class="block mx-auto mt-1 h-96 rounded-lg">
-                                            <img :src="this.mangas.medias[0] ? this.mangas.medias[0].url : '/img/imgPlaceholder.png' " class="object-cover bg-gray-200 mx-auto h-96 w-2/3" >
-                                        </div>
-                                    </div> -->
-                                    <div class="col-span-4 sm:col-span-3">
+                                    <div class="col-span-1 sm:col-span-1">
                                         <label for="name" class="block text-sm font-medium text-gray-700">Number</label>
                                         <p>n°{{this.chapters.number}}</p>
                                     </div>
-                                    <div class="col-span-4 sm:col-span-3">
+                                    <div class="col-span-5 sm:col-span-5">
                                         <label for="name" class="block text-sm font-medium text-gray-700">Title</label>
                                         <p>{{this.chapters.title}}</p>
+                                    </div>
+                                    <div class="col-span-6 row-span-6 sm:col-span-6">
+                                        <label for="cover" class="block text-sm font-medium text-gray-700">Pages</label>
+                                        <div class="block grid grid-cols-6 gap-6 mx-auto my-4 mt-4 rounded-lg">
+                                            <img v-for="media in this.chapters.medias" v-bind:key="media.id" :src="media.url" class="object-contain col-span-1 h-46" >
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -84,9 +84,9 @@
 </template>
 <script>
     import MangakaLayout from '@/Layouts/MangakaLayout'
-    import JetDialogModal from './../../../Jetstream/DialogModal'
-    import JetDangerButton from './../../../Jetstream/DangerButton'
-    import JetSecondaryButton from './../../../Jetstream/SecondaryButton'
+    import JetDialogModal from '@/Jetstream/DialogModal'
+    import JetDangerButton from '@/Jetstream/DangerButton'
+    import JetSecondaryButton from '@/Jetstream/SecondaryButton'
     import ChapterCard from '@/Components/Mangaka/ChapterCard'
     import moment from 'moment'
 
@@ -99,7 +99,7 @@
             ChapterCard
         },
 
-        props: ['chapters'],
+        props: ['mangas', 'chapters'],
 
         data () {
             return {
@@ -125,7 +125,7 @@
                 this.ConfirmDeletion = true
             },
             deleteChapter(){
-                this.delChapter.post(route('mangaka.chapters.destroy', {chapter: this.chapters.id}), {
+                this.delChapter.post(route('mangaka.chapters.destroy', {manga: this.mangas.id, chapter: this.chapters.id}), {
                     preserveScroll: true
                 })
             },

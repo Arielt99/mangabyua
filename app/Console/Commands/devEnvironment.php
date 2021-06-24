@@ -17,7 +17,7 @@ class devEnvironment extends Command
      *
      * @var string
      */
-    protected $signature = 'dev {Mangakas=0} {Readers=0} {Tags=0} {Mangas=0} {Chapters=0}';
+    protected $signature = 'dev {--seed} {--Mangakas=0} {--Readers=0} {--Tags=0} {--Mangas=0} {--Chapters=0}';
 
     /**
      * The console command description.
@@ -60,12 +60,15 @@ class devEnvironment extends Command
 
         $this->info("\033[1;36m DEV ENVIRONMENT CREATION");
 
+        //command params
+        $seed = $this->option('seed');
+
         //command values
-        $nbMangaka = $this->argument('Mangakas');
-        $nbReader = $this->argument('Readers');
-        $nbTag = $this->argument('Tags');
-        $nbManga = $this->argument('Mangas');
-        $nbChapter = $this->argument('Chapters');
+        $nbMangaka = $this->option('Mangakas');
+        $nbReader = $this->option('Readers');
+        $nbTag = $this->option('Tags');
+        $nbManga = $this->option('Mangas');
+        $nbChapter = $this->option('Chapters');
 
         //optimize
         $this->info("\033[0;33m Starting optimization...");
@@ -84,9 +87,11 @@ class devEnvironment extends Command
         $this->info("\033[32m Default migration done \xE2\x9C\x94");
 
         //seed
-        $this->info("\033[33m Starting seeding...");
-        Artisan::call('db:seed');
-        $this->info("\033[32m Seeding done \xE2\x9C\x94");
+        if($seed){
+            $this->info("\033[33m Starting seeding...");
+            Artisan::call('db:seed');
+            $this->info("\033[32m Seeding done \xE2\x9C\x94");
+        }
 
         /**
          * Users creation block

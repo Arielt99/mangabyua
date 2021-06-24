@@ -105,7 +105,7 @@ class MangaController extends Controller
         ->with('tags')
         ->with('medias')
         ->with(['chapters' => function ($query) {
-            $query->orderBy('id', 'DESC');
+            $query->orderBy('number', 'DESC');
         }])
         ->whereHas('mangakas', function ($query) {
             return $query->where('mangaka_id', Auth::user()->id);
