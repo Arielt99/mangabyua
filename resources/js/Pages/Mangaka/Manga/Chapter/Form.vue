@@ -69,7 +69,7 @@
 import JetActionMessage from '@/Jetstream/ActionMessage'
 import JetInputError from '@/Jetstream/InputError'
 import Multiselect from '@vueform/multiselect'
-import ChapterCard from '@/Components/Mangaka/ChapterCard'
+import MangakaLayout from '@/Layouts/MangakaLayout'
 import moment from 'moment'
 
 export default {
@@ -91,7 +91,7 @@ export default {
     components: {
         JetActionMessage,
         JetInputError,
-        ChapterCard,
+        MangakaLayout,
         Multiselect
     },
     data () {

@@ -18911,7 +18911,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Jetstream_ActionMessage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Jetstream/ActionMessage */ "./resources/js/Jetstream/ActionMessage.vue");
 /* harmony import */ var _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Jetstream/InputError */ "./resources/js/Jetstream/InputError.vue");
 /* harmony import */ var _vueform_multiselect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vueform/multiselect */ "./node_modules/@vueform/multiselect/dist/multiselect.js");
-/* harmony import */ var _Components_Mangaka_ChapterCard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Components/Mangaka/ChapterCard */ "./resources/js/Components/Mangaka/ChapterCard.vue");
+/* harmony import */ var _Layouts_MangakaLayout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/Layouts/MangakaLayout */ "./resources/js/Layouts/MangakaLayout.vue");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_4__);
 
@@ -18938,7 +18938,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     JetActionMessage: _Jetstream_ActionMessage__WEBPACK_IMPORTED_MODULE_0__.default,
     JetInputError: _Jetstream_InputError__WEBPACK_IMPORTED_MODULE_1__.default,
-    ChapterCard: _Components_Mangaka_ChapterCard__WEBPACK_IMPORTED_MODULE_3__.default,
+    MangakaLayout: _Layouts_MangakaLayout__WEBPACK_IMPORTED_MODULE_3__.default,
     Multiselect: _vueform_multiselect__WEBPACK_IMPORTED_MODULE_2__.default
   },
   data: function data() {
