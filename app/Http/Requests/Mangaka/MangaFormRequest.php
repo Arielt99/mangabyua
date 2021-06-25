@@ -28,10 +28,10 @@ class MangaFormRequest extends FormRequest
     public function rules()
     {
         //unique title
-        $uniqueRule = Rule::unique('mangas');
+        $uniqueRule = Rule::unique('mangas')->whereNull('deleted_at');
 
         if(!is_null($this->route()->parameter('manga'))){
-            $uniqueRule = Rule::unique('mangas')->ignore($this->route()->parameter('manga'));
+            $uniqueRule = Rule::unique('mangas')->ignore($this->route()->parameter('manga'))->whereNull('deleted_at');
         };
 
         //must have the current mangaka

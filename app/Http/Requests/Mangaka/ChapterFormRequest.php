@@ -26,10 +26,14 @@ class ChapterFormRequest extends FormRequest
     public function rules()
     {
         //unique title
-        $uniqueRule = Rule::unique('chapters');
+        $uniqueRule = Rule::unique('chapters')->where(function ($query){
+            return $query->where('manga_id', $this->route()->parameter('manga'));
+        });
 
         if(!is_null($this->route()->parameter('chapter'))){
-            $uniqueRule = Rule::unique('chapters')->ignore($this->route()->parameter('manga'));
+            $uniqueRule = Rule::unique('chapters')->where(function ($query){
+                return $query->where('manga_id', $this->route()->parameter('manga'));
+            })->ignore($this->route()->parameter('chapter'));
         };
 
         return [
