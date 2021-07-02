@@ -26,7 +26,6 @@ class ChapterController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  \App\Models\Manga  $manga
      * @return \Illuminate\Http\Response
      */
     public function create(Manga $manga)

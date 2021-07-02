@@ -13,10 +13,12 @@
         "inertiajs/inertia-laravel": "^0.3.5",
         "laravel/framework": "^8.12",
         "laravel/jetstream": "^2.3",
-        "laravel/sanctum": "^2.6",
+        "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "spatie/laravel-fractal": "^5.8",
         "spatie/laravel-permission": "^4.0",
-        "tightenco/ziggy": "^1.0"
+        "tightenco/ziggy": "^1.0",
+        "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
